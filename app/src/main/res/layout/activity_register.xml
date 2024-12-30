@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Header Section -->
+    <TextView
+        android:id="@+id/welcome_register_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="60dp"
+        android:text="Welcome"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/register_subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_register_text"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="8dp"
+        android:text="Signup into your account"
+        android:textColor="#808080"
+        android:textSize="15sp" />
+
+    <!-- Register Form Container with Rounded Corners -->
+    <RelativeLayout
+        android:id="@+id/register_form_container"
+        android:layout_width="match_parent"
+        android:layout_height="410dp"
+        android:layout_below="@id/register_subtext"
+        android:layout_margin="32dp"
+        android:background="@drawable/rounded_register_layout"
+        android:clipToOutline="true"
+        android:elevation="4dp"
+        android:padding="25dp">
+
+        <TextView
+            android:id="@+id/signUp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Sign Up"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/register_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/signUp_text"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/icon_user"
+            android:hint="Full Name"
+            android:background="@drawable/rectangular_register_text"
+            android:padding="12dp"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/register_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/register_username"
+            android:layout_marginBottom="16dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/icon_mail"
+            android:hint="Email"
+            android:background="@drawable/rectangular_register_text"
+            android:padding="12dp"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/register_email"
+            android:layout_marginBottom="16dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/icon_padlock"
+            android:hint="Password"
+            android:background="@drawable/rectangular_register_text"
+            android:padding="12dp"
+            android:inputType="textPassword" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/register_button"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/register_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:text="Sign Up"
+            android:textColor="@color/black"
+            app:cornerRadius="20dp" />
+    </RelativeLayout>
+
+    <!-- Already have an account? Log In Text -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_form_container"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dont_have_account_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account? "
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/login_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Log In"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="16sp" />
+    </LinearLayout>
+</RelativeLayout>
