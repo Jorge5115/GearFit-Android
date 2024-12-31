@@ -2,26 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBrown"
-    android:padding="16dp">
+    android:background="@color/lightBrown">
 
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
         android:background="@color/lightBrown"
-        android:padding="8dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/userIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="16dp"
             android:contentDescription="Icono de usuario"
             android:background="@drawable/rounded_icon"
-            android:src="@drawable/icon_user" />
+            android:src="@drawable/icon_person" />
 
         <LinearLayout
             android:id="@+id/userInfo"
@@ -43,6 +43,7 @@
                 android:id="@+id/currentDateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Fecha actual"
                 android:textColor="#777777"
                 android:textSize="14sp" />
@@ -55,20 +56,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="MY ACTIVITY"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="20dp"
         android:fontFamily="@font/montserrat_bold"
         android:layout_below="@id/headerLayout"
         android:textColor="@color/black"
         android:textSize="35sp"/>
 
     <!-- Horizontal ScrollView para las tarjetas -->
+
     <HorizontalScrollView
         android:id="@+id/cardsScrollView"
-        android:layout_width="395dp"
+        android:layout_width="match_parent"
         android:layout_height="141dp"
+
         android:layout_below="@id/activityText"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:layout_marginTop="3dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -76,7 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingEnd="8dp">
+
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
 
             <!-- Tarjeta de calorías -->
             <LinearLayout
@@ -207,6 +211,8 @@
         android:layout_marginTop="20dp"
         android:text="Establece tus pasos diarios"
         android:backgroundTint="@color/orange"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:textColor="#FFFFFF"
         android:padding="16dp"
         android:textSize="16sp" />

@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "MainActivity";
@@ -33,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // Componentes para el encabezado
     private TextView usernameTextView; // Muestra el nombre del usuario
     private TextView currentDateTextView; // Muestra la fecha actual
-    private ImageView userIcon; // Ícono del usuario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +47,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Obtener los datos del intent
         userId = getIntent().getIntExtra("userId", -1);
         String username = getIntent().getStringExtra("username");
-
-        if (userId == -1 || username == null) {
-            Toast.makeText(this, "Error: Usuario no válido", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-        Toast.makeText(this, "Bienvenido " + username, Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "Usuario logueado - userId: " + userId + ", username: " + username);
 
         // Inicializar componentes
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -75,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Configurar el nombre de usuario y la fecha
         usernameTextView.setText(username);
-        currentDateTextView.setText(currentDate);
+        currentDateTextView.setText(getCurrentFormattedDate());
 
         // Cargar el valor inicial de pasos desde SharedPreferences
         initialStepCount = getInitialStepCount(userId);
@@ -93,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private void setupUI() {
         getWindow().setStatusBarColor(Color.parseColor("#000000"));
         getSupportActionBar().hide();
+    }
+
+    // Método para obtener la fecha actual formateada
+    private String getCurrentFormattedDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM, dd 'of' yyyy", Locale.ENGLISH);
+        return sdf.format(new Date());
     }
 
     @Override
