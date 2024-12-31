@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private DatabaseHelper dbHelper;
     private TextView stepsTextView;
     private String currentDate;
+
+    // Componentes para el encabezado
+    private TextView usernameTextView; // Muestra el nombre del usuario
+    private TextView currentDateTextView; // Muestra la fecha actual
+    private ImageView userIcon; // Ícono del usuario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Obtener la fecha actual
         currentDate = getCurrentDate();
+
+        usernameTextView = findViewById(R.id.usernameTextView);
+        currentDateTextView = findViewById(R.id.currentDateTextView);
+
+        // Configurar el nombre de usuario y la fecha
+        usernameTextView.setText(username);
+        currentDateTextView.setText(currentDate);
 
         // Cargar el valor inicial de pasos desde SharedPreferences
         initialStepCount = getInitialStepCount(userId);
@@ -129,37 +142,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Log.d(TAG, "stepsToday calculados: " + stepsToday);
 
             stepsTextView.setText("Pasos hoy: " + stepsToday);
+
+            // Calcular calorías quemadas
+            double caloriesBurned = calculateCalories(stepsToday);
+
+            // Calcular distancia recorrida (en km)
+            double strideLength = 0.78; // Longitud promedio de zancada en metros
+            double distanceInKm = (stepsToday * strideLength) / 1000; // Convertir metros a kilómetros
+
+            // Actualizar texto en las tarjetas
+            stepsTextView.setText(String.valueOf(stepsToday)); // Actualizar pasos
+            TextView caloriesTextView = findViewById(R.id.caloriesTextView);
+            caloriesTextView.setText(String.format("%.0f KC", caloriesBurned)); // Actualizar calorías
+
+            TextView distanceTextView = findViewById(R.id.distanceTextView); // Asegúrate de tener este TextView en el layout
+            distanceTextView.setText(String.format("%.2f km", distanceInKm)); // Actualizar distancia
+
         }
     }
-
-
-
-    private void checkForNewDay() {
-        String today = getCurrentDate();
-        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String lastDate = prefs.getString("lastDate_" + userId, "");
-
-        // Si ha cambiado el día
-        if (!today.equals(lastDate)) {
-            Log.d(TAG, "Nuevo día detectado: " + today);
-
-            // Guardar la nueva fecha en SharedPreferences
-            prefs.edit().putString("lastDate_" + userId, today).apply();
-
-            // Resetear los pasos iniciales para el nuevo día
-            initialStepCount = 0;
-            saveInitialStepCount(userId, initialStepCount);
-
-            // Guardar 0 pasos en la base de datos para el nuevo día
-            dbHelper.saveDailySteps(userId, today, 0);
-
-            // Actualizar la variable global de la fecha actual
-            currentDate = today;
-
-            Log.d(TAG, "Pasos reiniciados para el nuevo día: " + today);
-        }
-    }
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -174,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Log.d(TAG, "initialStepCount guardado: " + initialStepCount + " para userId: " + userId);
     }
 
-
     private int getInitialStepCount(int userId) {
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         int initialStepCount = prefs.getInt("initialStepCount_" + userId, 0);
@@ -186,4 +185,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Aquí puedes usar un método para obtener la fecha actual en formato "yyyy-MM-dd"
         return java.time.LocalDate.now().toString();
     }
+
+    private double calculateCalories(int steps) {
+        return steps * 0.04; // Ejemplo: 0.04 KC por paso
+    }
+
 }

@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="greenLogin">#31d37d</color>
+    <color name="lightBrown">#e7dacd</color>
+    <color name="orange">#d9630a</color>
 </resources>

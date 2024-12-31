@@ -1,146 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/lightBrown"
+    android:padding="16dp">
 
-    <!-- Header con bienvenida y botón de perfil -->
     <RelativeLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="#F5F5F5">
+        android:layout_alignParentTop="true"
+        android:background="@color/lightBrown"
+        android:padding="8dp">
 
-        <TextView
-            android:id="@+id/welcome_user"
+        <ImageView
+            android:id="@+id/userIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Icono de usuario"
+            android:background="@drawable/rounded_icon"
+            android:src="@drawable/icon_user" />
+
+        <LinearLayout
+            android:id="@+id/userInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="¡Bienvenido!"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_toEndOf="@id/userIcon"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/user_profile_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:src="@drawable/icon_user"
-            android:contentDescription="Botón de perfil" />
+            <TextView
+                android:id="@+id/usernameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre de Usuario"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/currentDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha actual"
+                android:textColor="#777777"
+                android:textSize="14sp" />
+        </LinearLayout>
     </RelativeLayout>
 
-    <!-- Pasos y litros de agua -->
-    <LinearLayout
+    <TextView
+        android:id="@+id/activityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="MY ACTIVITY"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:layout_below="@id/headerLayout"
+        android:textColor="@color/black"
+        android:textSize="35sp"/>
+
+    <!-- Horizontal ScrollView para las tarjetas -->
+    <HorizontalScrollView
+        android:id="@+id/cardsScrollView"
+        android:layout_width="395dp"
+        android:layout_height="141dp"
+        android:layout_below="@id/activityText"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/cardsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingEnd="8dp">
+
+            <!-- Tarjeta de calorías -->
+            <LinearLayout
+                android:id="@+id/caloriesCard"
+                android:layout_width="130dp"
+                android:layout_height="140dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/caloriesIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="Icono de calorías"
+                    android:src="@drawable/icon_fire" />
+
+                <TextView
+                    android:id="@+id/caloriesTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="1000 KC"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/caloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Cal Burn"
+                    android:textColor="#777777"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Tarjeta de pasos -->
+            <LinearLayout
+                android:id="@+id/stepsCard"
+                android:layout_width="130dp"
+                android:layout_height="140dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/stepsIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="Icono de pasos"
+                    android:src="@drawable/icon_runner" />
+
+                <TextView
+                    android:id="@+id/stepsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="10000"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/stepsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Steps"
+                    android:textColor="#777777"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Tarjeta de kilómetros -->
+            <LinearLayout
+                android:id="@+id/kmCard"
+                android:layout_width="130dp"
+                android:layout_height="140dp"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/kmIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="Icono de kilómetros"
+                    android:src="@drawable/icon_distance" />
+
+                <TextView
+                    android:id="@+id/distanceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="8.5 KM"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/kmLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Distance"
+                    android:textColor="#777777"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/setDailyStepsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/welcome_user"
-        android:orientation="horizontal"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp"
-        android:gravity="center"
-        tools:ignore="NotSibling">
-
-        <!-- Pasos diarios -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/steps_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pasos"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/stepsTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="32sp"
-                android:textColor="#000000" />
-        </LinearLayout>
-
-        <!-- Divisor -->
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#DDDDDD" />
-
-        <!-- Litros de agua -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/water_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Litros"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/waterTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 L"
-                android:textSize="32sp"
-                android:textColor="#000000" />
-
-            <!-- Botón para modificar agua -->
-            <Button
-                android:id="@+id/water_modify_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Añadir/Quitar"
-                android:backgroundTint="#4CAF50"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Botones de Entrenamiento y Nutrición -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="16dp">
-
-        <!-- Botón de Entrenamiento -->
-        <Button
-            android:id="@+id/training_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Entrenamiento"
-            android:backgroundTint="#2196F3"
-            android:textColor="#FFFFFF"
-            android:layout_marginEnd="8dp" />
-
-        <!-- Botón de Nutrición -->
-        <Button
-            android:id="@+id/nutrition_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nutrición"
-            android:backgroundTint="#FF9800"
-            android:textColor="#FFFFFF"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+        android:layout_below="@id/cardsScrollView"
+        android:layout_marginTop="20dp"
+        android:text="Establece tus pasos diarios"
+        android:backgroundTint="@color/orange"
+        android:textColor="#FFFFFF"
+        android:padding="16dp"
+        android:textSize="16sp" />
 </RelativeLayout>
