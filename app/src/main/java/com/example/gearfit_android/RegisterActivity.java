@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (userName.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
                 } else {
-                    User newUser = new User(0, userName, userEmail, userPassword);
+                    User newUser = new User(0, userName, userEmail, userPassword, 0, 0, 0);
                     boolean isInserted = dbHelper.addUser(newUser);
 
                     if (isInserted) {

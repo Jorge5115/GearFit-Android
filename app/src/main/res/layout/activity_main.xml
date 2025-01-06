@@ -2,15 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBrown">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_grey">
 
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:background="@color/lightBrown"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_grey"
         android:padding="20dp">
 
         <ImageView
@@ -19,12 +20,12 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="16dp"
-            android:contentDescription="Icono de usuario"
             android:background="@drawable/rounded_icon"
+            android:contentDescription="Icono de usuario"
             android:src="@drawable/icon_person" />
 
         <LinearLayout
-            android:id="@+id/userInfo"
+            android:id="@+id/uQserInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/userIcon"
@@ -54,13 +55,13 @@
         android:id="@+id/activityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="MY ACTIVITY"
-        android:layout_marginLeft="20dp"
-        android:fontFamily="@font/montserrat_bold"
         android:layout_below="@id/headerLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="MY ACTIVITY"
         android:textColor="@color/black"
-        android:textSize="35sp"/>
+        android:textSize="35sp" />
 
     <!-- Horizontal ScrollView para las tarjetas -->
 
@@ -203,17 +204,73 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/setDailyStepsButton"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nutritionButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_below="@id/cardsScrollView"
-        android:layout_marginTop="20dp"
-        android:text="Establece tus pasos diarios"
-        android:backgroundTint="@color/orange"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"
-        android:textColor="#FFFFFF"
-        android:padding="16dp"
-        android:textSize="16sp" />
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/nutritionImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/food_background" />
+
+            <TextView
+                android:id="@+id/nutritionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_marginTop="150dp"
+                android:layout_marginLeft="20dp"
+                android:text="RECORD YOUR FOOD"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/trainingButton"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/nutritionButton"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/trainingImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/training_background" />
+
+            <TextView
+                android:id="@+id/trainingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="190dp"
+                android:text="START TRAINING"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

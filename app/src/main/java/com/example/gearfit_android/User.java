@@ -6,16 +6,23 @@ public class User {
     private String email;
     private String password;
 
+    private float weight;
+    private float height;
+    private int kcalObjective;
+
     // Constructor vacío
     public User() {
     }
 
     // Constructor con parámetros
-    public User(int id, String nombre, String email, String password) {
+    public User(int id, String username, String email, String password, float weight, float height, int kcalObjective) {
         this.id = id;
-        this.username = nombre;
+        this.username = username;
         this.email = email;
         this.password = password;
+        this.weight = weight;
+        this.height = height;
+        this.kcalObjective = kcalObjective;
     }
 
     // Getters y Setters
@@ -49,5 +56,31 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public int getKcalObjective() {
+        return kcalObjective;
+    }
+
+    public void setKcalObjective(int kcalObjective) {
+        this.kcalObjective = kcalObjective;
     }
 }

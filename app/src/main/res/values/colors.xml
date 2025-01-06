@@ -10,4 +10,9 @@
     <color name="greenLogin">#31d37d</color>
     <color name="lightBrown">#e7dacd</color>
     <color name="orange">#d9630a</color>
+    <color name="red">#F44336</color>
+    <color name="blue">#4192f5</color>
+    <color name="light_grey">#f7f7f7</color>
+    <color name="grey">#7C7C7C</color>
+    <color name="dark_grey">#1f191b</color>
 </resources>

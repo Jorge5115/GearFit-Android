@@ -1,19 +1,31 @@
 package com.example.gearfit_android;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager sensorManager;
     private Sensor stepCounterSensor;
-
     private int userId;
     private int initialStepCount;
     private boolean isInitialCountSet = false;
@@ -35,14 +46,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String currentDate;
 
     // Componentes para el encabezado
-    private TextView usernameTextView; // Muestra el nombre del usuario
-    private TextView currentDateTextView; // Muestra la fecha actual
+
+    private ImageView userIcon;
+    private TextView usernameTextView;
+    private TextView currentDateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
+
+        // En tu onCreate o en un método adecuado
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 1);
+            }
+        }
 
         // Obtener los datos del intent
         userId = getIntent().getIntExtra("userId", -1);
@@ -71,6 +91,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         usernameTextView.setText(username);
         currentDateTextView.setText(getCurrentFormattedDate());
 
+        // Configurar clic en userIcon
+        userIcon = findViewById(R.id.userIcon);
+        userIcon.setClickable(true);
+        userIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("userId", userId); // Pasar datos si es necesario
+                startActivity(intent);
+            }
+        });
+
         // Cargar el valor inicial de pasos desde SharedPreferences
         initialStepCount = getInitialStepCount(userId);
         if (initialStepCount > 0) {
@@ -89,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         getSupportActionBar().hide();
     }
 
-    // Método para obtener la fecha actual formateada
+    // Obtener la fecha actual formateada
     private String getCurrentFormattedDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM, dd 'of' yyyy", Locale.ENGLISH);
         return sdf.format(new Date());
@@ -122,9 +154,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             // Si el día cambió, reinicia el contador inicial para el nuevo día
             if (!currentDate.equals(todayDate)) {
-                currentDate = todayDate; // Actualizar la fecha actual
-                initialStepCount = totalSteps; // Reiniciar el contador inicial
-                saveInitialStepCount(userId, initialStepCount); // Guardar en SharedPreferences
+                currentDate = todayDate;
+                initialStepCount = totalSteps;
+                saveInitialStepCount(userId, initialStepCount);
                 dbHelper.saveDailySteps(userId, currentDate, 0); // Reiniciar los pasos del día a 0 en la base de datos
                 Log.d(TAG, "Nuevo día detectado. Reseteando pasos.");
             }
@@ -138,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
 
             int stepsToday = totalSteps - initialStepCount;
+
+            // Asegúrate de que stepsToday no sea negativo
+            if (stepsToday < 0) {
+                stepsToday = 0; // Establecer a 0 si es negativo
+                // También puedes considerar reiniciar initialStepCount aquí si es necesario
+                initialStepCount = totalSteps; // Reiniciar el conteo inicial para evitar futuros negativos
+                saveInitialStepCount(userId, initialStepCount);
+            }
+
             dbHelper.saveDailySteps(userId, currentDate, stepsToday);
             Log.d(TAG, "stepsToday calculados: " + stepsToday);
 
@@ -151,13 +192,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             double distanceInKm = (stepsToday * strideLength) / 1000; // Convertir metros a kilómetros
 
             // Actualizar texto en las tarjetas
-            stepsTextView.setText(String.valueOf(stepsToday)); // Actualizar pasos
+            stepsTextView.setText(String.valueOf(stepsToday));
             TextView caloriesTextView = findViewById(R.id.caloriesTextView);
-            caloriesTextView.setText(String.format("%.0f KC", caloriesBurned)); // Actualizar calorías
+            caloriesTextView.setText(String.format("%.0f KC", caloriesBurned));
 
-            TextView distanceTextView = findViewById(R.id.distanceTextView); // Asegúrate de tener este TextView en el layout
-            distanceTextView.setText(String.format("%.2f km", distanceInKm)); // Actualizar distancia
-
+            TextView distanceTextView = findViewById(R.id.distanceTextView);
+            distanceTextView.setText(String.format("%.2f km", distanceInKm));
         }
     }
 
@@ -182,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private String getCurrentDate() {
-        // Aquí puedes usar un método para obtener la fecha actual en formato "yyyy-MM-dd"
+        // Aquí puedes obtener la fecha actual en formato "yyyy-MM-dd"
         return java.time.LocalDate.now().toString();
     }
 
