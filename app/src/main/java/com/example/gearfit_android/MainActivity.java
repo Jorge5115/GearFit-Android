@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView usernameTextView;
     private TextView currentDateTextView;
 
+    private ImageView nutritionImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +100,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("userId", userId); // Pasar datos si es necesario
+                startActivity(intent);
+            }
+        });
+
+        // Configurar clic en nutritionImage
+        nutritionImage = findViewById(R.id.nutritionImage);
+        nutritionImage.setClickable(true);
+        nutritionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NutritionActivity.class);
                 intent.putExtra("userId", userId); // Pasar datos si es necesario
                 startActivity(intent);
             }

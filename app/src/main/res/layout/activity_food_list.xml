@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey">
+
+    <!-- Barra superior con botón de volver y de cambio de comida -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B5D7FD"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"> <!-- Agregar padding aquí -->
+
+        <!-- Botón de volver -->
+        <ImageView
+            android:id="@+id/buttonBack"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_close" /> <!-- Margen a la derecha -->
+
+        <!-- Contenedor para el título de la comida y la fecha -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <!-- Título actual de la comida (por ejemplo, Desayuno) -->
+            <TextView
+                android:id="@+id/currentMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desayuno"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- TextView para la fecha -->
+            <TextView
+                android:id="@+id/currentMealDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha: 01/01/2023"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Nuevo LinearLayout para los botones de mi lista y mis alimentos -->
+    <LinearLayout
+        android:id="@+id/editRemoveButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:background="#B5D7FD"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Botón de los alimentos agregados en la comida actual -->
+        <Button
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_button"
+            android:text="Mi lista"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold" />
+
+        <!-- Botón de alimentos registrados por el usuario -->
+        <Button
+            android:id="@+id/buttonRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_button"
+            android:text="Alimentos registrados"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Barra de búsqueda -->
+    <LinearLayout
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editRemoveButtons"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rounded_search_background"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon_search" />
+
+        <EditText
+            android:id="@+id/editSearchFood"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
+            android:hint="Búsqueda de alimentos"
+            android:inputType="text"
+            android:padding="4dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/foodItemScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_below="@id/searchBar"
+        android:layout_marginTop="16dp">
+
+        <!-- Contenedor para los botones de alimento -->
+        <LinearLayout
+            android:id="@+id/foodItemContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Ejemplo de botón de alimento (se replicará dinámicamente) -->
+            <LinearLayout
+                android:id="@+id/exampleFoodButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/rounded_food_button"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/exampleFoodText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="example_food_item"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/addFoodButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/foodItemScrollView"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/add_food_button"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/addFoodText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REGISTER NEW FOOD"
+            android:textColor="@color/orange"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

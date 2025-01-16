@@ -36,6 +36,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_STEPS = "steps";
 
+    // Definiciones para la tabla de alimentos
+    private static final String TABLE_FOOD = "food";
+    private static final String COLUMN_FOOD_ID = "food_id";
+    private static final String COLUMN_FOOD_NAME = "name";
+    private static final String COLUMN_FOOD_CALORIES = "calories";
+    private static final String COLUMN_FOOD_PROTEIN = "protein";
+    private static final String COLUMN_FOOD_CARBS = "carbs";
+    private static final String COLUMN_FOOD_FAT = "fat";
+    private static final String COLUMN_FOOD_USER_ID = "user_id";
+
+    // Definiciones para la tabla de registros de alimentos
+    private static final String TABLE_FOOD_LOG = "food_log";
+    private static final String COLUMN_LOG_ID = "log_id";
+    private static final String COLUMN_LOG_FOOD_ID = "food_id";
+    private static final String COLUMN_LOG_USER_ID = "user_id";
+    private static final String COLUMN_LOG_GRAMS = "grams";
+    private static final String COLUMN_LOG_DATE = "date";
+
+    private static final String COLUMN_LOG_MEAL_TYPE = "meal_type";
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + " (" +
@@ -55,6 +76,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_STEPS + " INTEGER, " +
                 "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(CREATE_STEPS_TABLE);
+
+        String CREATE_FOOD_TABLE = "CREATE TABLE " + TABLE_FOOD + " (" +
+                COLUMN_FOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_FOOD_USER_ID + " INTEGER NOT NULL, " +
+                COLUMN_FOOD_NAME + " TEXT NOT NULL, " +
+                COLUMN_FOOD_CALORIES + " INTEGER NOT NULL, " +
+                COLUMN_FOOD_PROTEIN + " REAL NOT NULL, " +
+                COLUMN_FOOD_CARBS + " REAL NOT NULL, " +
+                COLUMN_FOOD_FAT + " REAL NOT NULL, " +
+                "FOREIGN KEY (" + COLUMN_FOOD_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
+        db.execSQL(CREATE_FOOD_TABLE);
+
+        String CREATE_FOOD_LOG_TABLE = "CREATE TABLE " + TABLE_FOOD_LOG + " (" +
+                COLUMN_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_LOG_FOOD_ID + " INTEGER NOT NULL, " +
+                COLUMN_LOG_USER_ID + " INTEGER NOT NULL, " +
+                COLUMN_LOG_GRAMS + " REAL NOT NULL, " +
+                COLUMN_LOG_DATE + " TEXT NOT NULL, " +
+                COLUMN_LOG_MEAL_TYPE + " TEXT NOT NULL, " +
+                "FOREIGN KEY (" + COLUMN_LOG_FOOD_ID + ") REFERENCES " + TABLE_FOOD + "(" + COLUMN_FOOD_ID + "), " +
+                "FOREIGN KEY (" + COLUMN_LOG_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
+        db.execSQL(CREATE_FOOD_LOG_TABLE);
     }
 
 
@@ -63,6 +106,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STEPS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOOD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOOD_LOG);
 
         onCreate(db);
     }
@@ -98,9 +143,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)));
             user.setEmail(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL)));
             user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD)));
-            user.setWeight(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT))); // Nuevo campo
-            user.setHeight(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_HEIGHT))); // Nuevo campo
-            user.setKcalObjective(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_KCAL_OBJECTIVE))); // Nuevo campo
+            user.setWeight(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT)));
+            user.setHeight(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_HEIGHT)));
+            user.setKcalObjective(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_KCAL_OBJECTIVE)));
 
             cursor.close();
             return user;
