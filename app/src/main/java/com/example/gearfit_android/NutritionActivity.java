@@ -17,16 +17,13 @@ import java.util.Locale;
 
 public class NutritionActivity extends AppCompatActivity {
 
+    private int userId;
     private MaterialCardView[] dayButtons;
     private TextView[] dayTexts;
     private Calendar[] dayDates;
     private MaterialCardView activeButton;
-    private int userId;
-
     private Calendar selectedDate;
-
     private LinearLayout btnDesayuno, btnComida, btnMerienda, btnCena;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +78,7 @@ public class NutritionActivity extends AppCompatActivity {
         String formattedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate.getTime());
 
         Intent intent = new Intent(NutritionActivity.this, FoodListActivity.class);
+        intent.putExtra("userId", userId);
         intent.putExtra("currentMeal", meal);
         intent.putExtra("currentMealDate", formattedDate);
         startActivity(intent);

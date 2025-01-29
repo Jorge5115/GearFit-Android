@@ -8,11 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Nombre y versión de la base de datos
     private static final String DATABASE_NAME = "gearfit.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Tabla Usuarios
     public static final String TABLE_USERS = "registered_users";
@@ -224,6 +227,73 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return steps;
+    }
+
+
+    public boolean addFood(Food food) {
+        if (isFoodNameExists(food.getUserId(), food.getName())) {
+            return false;  // Nombre de alimento ya existe
+        }
+
+        // Verificación de valores negativos
+        if (food.getCalories() < 0 || food.getProtein() < 0 || food.getCarbs() < 0 || food.getFat() < 0) {
+            return false;  // Datos no válidos
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FOOD_USER_ID, food.getUserId());
+        values.put(COLUMN_FOOD_NAME, food.getName());
+        values.put(COLUMN_FOOD_CALORIES, food.getCalories());
+        values.put(COLUMN_FOOD_PROTEIN, food.getProtein());
+        values.put(COLUMN_FOOD_CARBS, food.getCarbs());
+        values.put(COLUMN_FOOD_FAT, food.getFat());
+
+        long result = db.insert(TABLE_FOOD, null, values);
+        db.close();
+        return result != -1;
+    }
+
+    public boolean isFoodNameExists(int userId, String foodName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM " + TABLE_FOOD + " WHERE " + COLUMN_FOOD_USER_ID + " = ? AND " + COLUMN_FOOD_NAME + " = ?",
+                new String[]{String.valueOf(userId), foodName}
+        );
+
+        boolean exists = false;
+        if (cursor.moveToFirst()) {
+            exists = cursor.getInt(0) > 0;
+        }
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    public List<Food> getFoodsByUserId(int userId) {
+        List<Food> foodList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_FOOD + " WHERE " + COLUMN_FOOD_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Food food = new Food();
+                food.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_ID)));
+                food.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_USER_ID)));
+                food.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FOOD_NAME)));
+                food.setCalories(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CALORIES)));
+                food.setProtein(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_PROTEIN)));
+                food.setCarbs(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CARBS)));
+                food.setFat(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_FAT)));
+
+                foodList.add(food);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return foodList;
     }
 
 

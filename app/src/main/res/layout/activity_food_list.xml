@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/transparent_button"
             android:text="Alimentos registrados"
-            android:textColor="@color/black"
+            android:textColor="@color/light_grey"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -112,6 +112,7 @@
             android:background="@android:color/transparent"
             android:hint="Búsqueda de alimentos"
             android:inputType="text"
+            android:textColor="@color/black"
             android:padding="4dp" />
     </LinearLayout>
 
@@ -130,26 +131,7 @@
             android:orientation="vertical">
 
             <!-- Ejemplo de botón de alimento (se replicará dinámicamente) -->
-            <LinearLayout
-                android:id="@+id/exampleFoodButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/rounded_food_button"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/exampleFoodText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="example_food_item"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
