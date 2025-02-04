@@ -3,11 +3,13 @@ package com.example.gearfit_android;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.List;
 
@@ -127,6 +129,18 @@ public class FoodListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // Acción cuando se presiona un alimento (opcional)
+                }
+            });
+
+            foodView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setBackgroundResource(R.drawable.rounded_pressed_food_button); // Fondo al presionar
+                    } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                        v.setBackgroundResource(R.drawable.rounded_food_button); // Fondo normal al soltar
+                    }
+                    return false;
                 }
             });
 
