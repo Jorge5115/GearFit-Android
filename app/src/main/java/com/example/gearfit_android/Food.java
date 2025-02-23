@@ -22,14 +22,6 @@ public class Food {
         this.fat = fat;
     }
 
-    public Food(int id, String name, int calories, double proteins, double fats, double carbs) {
-        this.userId = id;
-        this.name = name;
-        this.calories = calories;
-        this.protein = proteins;
-        this.carbs = carbs;
-        this.fat = fats;
-    }
 
     public int getId() {
         return id;

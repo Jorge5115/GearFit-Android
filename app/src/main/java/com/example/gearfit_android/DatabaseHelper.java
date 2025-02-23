@@ -300,18 +300,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Food food = null;
 
-        String query = "SELECT * FROM foods WHERE id = ?";
+        String query = "SELECT * FROM " + TABLE_FOOD + " WHERE " + COLUMN_FOOD_ID + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(foodId)});
 
         if (cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-            int calories = cursor.getInt(cursor.getColumnIndexOrThrow("calories"));
-            double proteins = cursor.getDouble(cursor.getColumnIndexOrThrow("proteins"));
-            double fats = cursor.getDouble(cursor.getColumnIndexOrThrow("fats"));
-            double carbs = cursor.getDouble(cursor.getColumnIndexOrThrow("carbs"));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_ID));
+            int userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_USER_ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FOOD_NAME));
+            int calories = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CALORIES));
+            double proteins = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_PROTEIN));
+            double carbs = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CARBS));
+            double fats = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CALORIES));
 
-            food = new Food(id, name, calories, proteins, fats, carbs);
+            food = new Food(id, userId, name, calories, proteins, fats, carbs);
         }
 
         cursor.close();
