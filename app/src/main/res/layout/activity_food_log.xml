@@ -110,7 +110,7 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/foodItemScrollView"
+        android:id="@+id/foodLogScrollView"
         android:layout_width="match_parent"
         android:layout_height="550dp"
         android:layout_below="@id/addFoodLogButton"
@@ -118,7 +118,7 @@
 
         <!-- Contenedor para los botones de alimento -->
         <LinearLayout
-            android:id="@+id/foodItemContainer"
+            android:id="@+id/foodLogContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

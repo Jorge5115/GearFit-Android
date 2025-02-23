@@ -77,12 +77,11 @@ public class NutritionActivity extends AppCompatActivity {
     private void onMealButtonClick(String meal) {
         String formattedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate.getTime());
 
-        Intent intent = new Intent(NutritionActivity.this, FoodListActivity.class);
+        Intent intent = new Intent(NutritionActivity.this, FoodLogActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("currentMeal", meal);
         intent.putExtra("currentMealDate", formattedDate);
         startActivity(intent);
-
     }
 
     private void populateDaysWithDates() {

@@ -22,6 +22,16 @@ public class FoodLog {
         this.mealType = mealType;
     }
 
+    // Constructor sin el ID (para cuando insertamos un nuevo registro)
+    public FoodLog(int foodId, int userId, double grams, String date, String mealType) {
+        this.foodId = foodId;
+        this.userId = userId;
+        this.grams = grams;
+        this.date = date;
+        this.mealType = mealType;
+    }
+
+
     // Getters y Setters
     public int getId() {
         return id;

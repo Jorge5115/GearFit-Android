@@ -30,6 +30,9 @@
         <activity android:name=".NutritionActivity" />
         <activity android:name=".FoodListActivity" />
         <activity android:name=".FoodCreateActivity" />
+        <activity android:name=".FoodLogActivity" />
+        <activity android:name=".AddFoodLogActivity" />
+        <activity android:name=".SelectFoodLogActivity" />
 
     </application>
 

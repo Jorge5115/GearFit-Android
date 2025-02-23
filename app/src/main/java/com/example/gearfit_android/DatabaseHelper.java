@@ -296,5 +296,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return foodList;
     }
 
+    public Food getFoodById(int foodId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Food food = null;
+
+        String query = "SELECT * FROM foods WHERE id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(foodId)});
+
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            int calories = cursor.getInt(cursor.getColumnIndexOrThrow("calories"));
+            double proteins = cursor.getDouble(cursor.getColumnIndexOrThrow("proteins"));
+            double fats = cursor.getDouble(cursor.getColumnIndexOrThrow("fats"));
+            double carbs = cursor.getDouble(cursor.getColumnIndexOrThrow("carbs"));
+
+            food = new Food(id, name, calories, proteins, fats, carbs);
+        }
+
+        cursor.close();
+        db.close();
+        return food;
+    }
+
+
+    public void insertFoodLog(FoodLog foodLog) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("userId", foodLog.getUserId());
+        values.put("foodId", foodLog.getFoodId());
+        values.put("grams", foodLog.getGrams());
+        db.insert("FoodLog", null, values);
+    }
+
 
 }

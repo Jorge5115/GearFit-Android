@@ -9,30 +9,38 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
+
 
 public class FoodListActivity extends AppCompatActivity {
 
+    // Datos del usuario
     private int userId;
     private TextView mealTitleTextView;
     private TextView selectedDateTextView;
+
+    // Elementos de la interfaz de usuario
     private LinearLayout foodItemContainer;
     private LinearLayout addFoodButton;
+
+    // Campo de búsqueda
     private EditText searchFoodEditText;
 
-    private List<Food> foodList; // Lista original de alimentos
-    private List<Food> filteredFoodList; // Lista filtrada de alimentos
+    // Lista original de alimentos
+    private List<Food> foodList;
+
+    // Lista filtrada de alimentos
+    private List<Food> filteredFoodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,6 @@ public class FoodListActivity extends AppCompatActivity {
 
         mealTitleTextView = findViewById(R.id.currentMeal);
         selectedDateTextView = findViewById(R.id.currentMealDate);
-        addFoodButton = findViewById(R.id.addFoodButton);
         searchFoodEditText = findViewById(R.id.editSearchFood);
 
         // Obtener los datos del Intent de NutritionActivity
@@ -52,11 +59,15 @@ public class FoodListActivity extends AppCompatActivity {
 
         // Mostrar la comida actual y la fecha
         mealTitleTextView.setText(mealTitle);
-        selectedDateTextView.setText(selectedDate);
+        String formattedDate = formatDate(selectedDate);
+
+        // Formatear la fecha antes de mostrarla
+        selectedDateTextView.setText(formattedDate);
 
         foodItemContainer = findViewById(R.id.foodItemContainer);
         loadUserFoods();
 
+        addFoodButton = findViewById(R.id.addFoodButton);
         addFoodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +94,19 @@ public class FoodListActivity extends AppCompatActivity {
                 // No se necesita implementar
             }
         });
+    }
+
+    private String formatDate(String dateString) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+
+        try {
+            Date date = inputFormat.parse(dateString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return dateString; // En caso de error, devuelve la fecha sin cambios
+        }
     }
 
     private void loadUserFoods() {
