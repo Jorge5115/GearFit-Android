@@ -2,247 +2,569 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
-    android:padding="16dp">
+    android:background="@color/light_grey">
 
-    <!-- Título de la comida seleccionada -->
-    <TextView
-        android:id="@+id/mealTitleTextView"
-        android:layout_width="wrap_content"
+    <!-- Barra superior con botón de volver y de cambio de comida -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comida Seleccionada"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"/>
+        android:background="#B5D7FD"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <!-- Fecha seleccionada -->
-    <TextView
-        android:id="@+id/selectedDateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha seleccionada"
-        android:textSize="16sp"
-        android:layout_below="@id/mealTitleTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"/>
+        <!-- Botón de volver -->
+        <ImageView
+            android:id="@+id/buttonBack"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_close" />
+
+        <!-- Contenedor para el título de la comida y la fecha -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <!-- Título actual de la comida (por ejemplo, Desayuno) -->
+            <TextView
+                android:id="@+id/currentMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desayuno"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- TextView para la fecha -->
+            <TextView
+                android:id="@+id/currentMealDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha: 01/01/2023"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <!-- Pestaña para mostrar/ocultar la lista de alimentos -->
     <LinearLayout
         android:id="@+id/foodSelectionHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/orange"
-        android:padding="10dp"
-        android:gravity="center_vertical"
-        android:layout_below="@id/selectedDateTextView"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_below="@id/topBar"
+        android:background="#6D6D6D"
+        android:gravity="center"
+        android:elevation="10dp"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/foodSelectionHeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seleccionar Alimento"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Seleccionar Alimento"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/foodSelectionIndicator"
             android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:src="@drawable/icon_expand_more"/>
+            android:src="@drawable/icon_expand_more" />
     </LinearLayout>
 
     <!-- Campo para ingresar la cantidad de gramos -->
-    <EditText
-        android:id="@+id/editTextGrams"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/foodSelectionHeader"
-        android:hint="Ingrese gramos"
-        android:inputType="number"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:background="@drawable/rounded_edit_background"/>
-
-    <!-- Tabla de datos nutricionales -->
-    <TableLayout
-        android:id="@+id/nutritionTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextGrams"
-        android:stretchColumns="1"
-        android:layout_marginTop="10dp">
-
-        <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nombre"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Kcal/100g"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Fats/100g"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Carbs/100g"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Prote/100g"
-                android:textStyle="bold"/>
-        </TableRow>
-
-        <!-- Aquí puedes agregar filas dinámicamente con los datos de los alimentos -->
-        <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ejemplo Alimento"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="250"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="10"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="30"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5"/>
-        </TableRow>
-
-        <!-- Agrega más filas según sea necesario -->
-    </TableLayout>
-
-    <!-- Sección para mostrar datos nutricionales totales -->
-    <TextView
-        android:id="@+id/totalNutritionTextView"
+    <LinearLayout
+        android:id="@+id/editGramsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Datos Nutricionales Totales"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_below="@id/nutritionTable"
-        android:layout_marginTop="20dp"/>
+        android:layout_below="@id/foodSelectionHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Añade la cantidad:"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/editGramsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_layout"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextGrams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:inputType="number"
+                android:minWidth="20dp"
+                android:padding="5dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="gramos"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!-- Fecha seleccionada -->
+    <TextView
+        android:id="@+id/warningGramsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editGramsLayout"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp" />
+
+    <!-- Sección para mostrar datos nutricionales totales -->
     <TableLayout
         android:id="@+id/totalNutritionTable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/totalNutritionTextView"
-        android:stretchColumns="1">
+        android:layout_below="@id/warningGramsTextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/border"
+        android:elevation="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="16dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="24dp"
+        android:translationX="-5dp">
 
+        <TextView
+            android:id="@+id/totalNutritionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/warningGramsTextView"
+            android:text="Información Nutricional"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/black" />
+
+        <!-- Fila de encabezado -->
         <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Kcal Total"/>
 
-            <TextView
-                android:id="@+id/totalKcalTextView"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contenido por cada:"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100g"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0"/> <!-- Valor inicial -->
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalNutritionGramsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/black" />
+            </LinearLayout>
         </TableRow>
 
+        <!-- Fila Kcal -->
         <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Grasas Totales"/>
 
-            <TextView
-                android:id="@+id/totalFatTextView"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Calorias"
+                    android:textColor="@color/black"
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalKcalPer100TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0"/> <!-- Valor inicial -->
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalKcalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/black" />
+            </LinearLayout>
         </TableRow>
 
-        <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Carbohidratos Totales"/>
 
-            <TextView
-                android:id="@+id/totalCarbsTextView"
-                android:layout_width="0dp"
+        <!-- Fila Grasa Total -->
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="Grasas Totales"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:text="0"/> <!-- Valor inicial -->
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalFatPer100TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalFatTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
         </TableRow>
 
+        <!-- Fila Carbohidratos -->
         <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Proteínas Totales"/>
 
-            <TextView
-                android:id="@+id/totalProteinTextView"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="Carbohidratos"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:text="0"/> <!-- Valor inicial -->
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalCarbsPer100TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalCarbsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
         </TableRow>
+
+        <!-- Fila Proteínas -->
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="Proteina Total"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalProteinPer100TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/totalProteinTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:text="0g"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+        </TableRow>
+
+
     </TableLayout>
 
-    <!-- Botón flotante para añadir un nuevo alimento -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <!-- Botón para añadir un nuevo alimento -->
+    <LinearLayout
         android:id="@+id/btnSaveFoodLog"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/icon_add"
-        android:contentDescription="Añadir Alimento"
-        android:backgroundTint="@color/orange"/>
+        android:layout_below="@id/totalNutritionTable"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rounded_add_button"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_add" />
+
+        <TextView
+            android:id="@+id/btnSaveFoodTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:text="Añadir Alimento"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
 </RelativeLayout>
