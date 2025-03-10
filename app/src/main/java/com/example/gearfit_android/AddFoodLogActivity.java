@@ -58,6 +58,8 @@ public class AddFoodLogActivity extends AppCompatActivity {
 
     TextView warningGramsTextView;
 
+    TextView btnSaveFoodTextView;
+
     private static final int MAX_GRAMS = 2000;
     private static final int WARNING_GRAMS = 1000;
 
@@ -101,6 +103,9 @@ public class AddFoodLogActivity extends AppCompatActivity {
         totalFatTextView = findViewById(R.id.totalFatTextView);
 
         btnSaveFoodLog = findViewById(R.id.btnSaveFoodLog);
+        btnSaveFoodTextView = findViewById(R.id.btnSaveFoodTextView);
+
+        btnSaveFoodTextView.setText("Selecciona un Alimento");
 
         // Mostrar la comida actual y la fecha formateada
         mealTitleTextView.setText(mealTitle);
@@ -138,28 +143,41 @@ public class AddFoodLogActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().isEmpty()) {
-                    int grams;
-                    try {
-                        grams = Integer.parseInt(s.toString());
-                    } catch (NumberFormatException e) {
-                        editTextGrams.setText("0");
+                    String input = s.toString();
+
+                    // Eliminar ceros al inicio, pero permitir un solo "0" si es el único número
+                    if (input.matches("^0\\d+")) {
+                        input = input.replaceFirst("^0+", ""); // Elimina ceros iniciales
+                        editTextGrams.setText(input);
+                        editTextGrams.setSelection(input.length()); // Mantiene el cursor al final
                         return;
                     }
 
-                    if (grams > MAX_GRAMS) {
-                        editTextGrams.setText(String.valueOf(MAX_GRAMS));
+                    try {
+                        int grams = Integer.parseInt(input);
+
+                        // Actualizar el texto del botón con los gramos seleccionados
+                        btnSaveFoodTextView.setText("Añadir " + grams + "g a " + mealTitleTextView.getText().toString());
+
+                        if (grams > MAX_GRAMS) {
+                            editTextGrams.setText(String.valueOf(MAX_GRAMS));
+                            editTextGrams.setSelection(editTextGrams.getText().length());
+                            warningGramsTextView.setText("Máximo permitido: " + MAX_GRAMS + "g por temas de salud");
+                            warningGramsTextView.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                        } else if (grams >= WARNING_GRAMS) {
+                            warningGramsTextView.setText("Cuidado: " + WARNING_GRAMS + "g puede ser excesivo");
+                            warningGramsTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_light));
+                        } else {
+                            warningGramsTextView.setText("");
+                            warningGramsTextView.setTextColor(getResources().getColor(android.R.color.white));
+                        }
+                    } catch (NumberFormatException e) {
+                        editTextGrams.setText("0");
                         editTextGrams.setSelection(editTextGrams.getText().length());
-                        warningGramsTextView.setText("Máximo permitido: " + MAX_GRAMS + "g por temas salud");
-                        warningGramsTextView.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-                    } else if (grams >= WARNING_GRAMS) {
-                        warningGramsTextView.setText("Cuidado: " + WARNING_GRAMS + "g puede ser excesivo");
-                        warningGramsTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_light));
-                    } else {
-                        warningGramsTextView.setText("");
-                        warningGramsTextView.setTextColor(getResources().getColor(android.R.color.white));
                     }
                 } else {
-                    warningGramsTextView.setTextColor(getResources().getColor(android.R.color.white));
+                    editTextGrams.setText("0");
+                    editTextGrams.setSelection(editTextGrams.getText().length());
                 }
                 calculateNutrition();
             }
@@ -273,7 +291,9 @@ public class AddFoodLogActivity extends AppCompatActivity {
 
         int grams = Integer.parseInt(editTextGrams.getText().toString());
 
-        FoodLog newLog = new FoodLog(userId, selectedFood.getId(), grams, selectDateUnformatted, mealTitleTextView.getText().toString());
+        FoodLog newLog = new FoodLog(selectedFood.getId(), userId, grams, selectDateUnformatted, mealTitleTextView.getText().toString());
+        Toast.makeText(this, "Guardando alimento del usuario " + userId + " " + newLog.getUserId(), Toast.LENGTH_SHORT).show();
+
         dbHelper.insertFoodLog(newLog);
 
         Toast.makeText(this, "Alimento agregado al historial", Toast.LENGTH_SHORT).show();

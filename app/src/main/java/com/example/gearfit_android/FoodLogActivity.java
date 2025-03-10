@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,24 +75,43 @@ public class FoodLogActivity extends AppCompatActivity {
     }
 
     private void loadFoodLog(String date, String mealType) {
-        /*DatabaseHelper dbHelper = new DatabaseHelper(this);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         List<FoodLog> foodLogs = dbHelper.getFoodLogsByDateAndMeal(userId, date, mealType);
+
+        // Verificamos si no hay ningún log de alimento
+        if (foodLogs.isEmpty()) {
+            Toast.makeText(this, "No se han encontrado alimentos para esta comida.", Toast.LENGTH_SHORT).show();
+        }
 
         foodLogContainer.removeAllViews();
         for (FoodLog log : foodLogs) {
-            View foodView = getLayoutInflater().inflate(R.layout.food_log_item, foodLogContainer, false);
-            TextView foodNameText = foodView.findViewById(R.id.food_name);
-            TextView foodGramsText = foodView.findViewById(R.id.food_grams);
-            TextView foodCaloriesText = foodView.findViewById(R.id.food_calories);
+            // Obtener los valores nutricionales usando el método getNutritionalValues
+            double[] nutritionalValues = log.getNutritionalValues(dbHelper);
 
-            foodNameText.setText(log.getFoodName());
-            foodGramsText.setText(log.getGrams() + "g");
-            foodCaloriesText.setText((log.getCaloriesPer100g() * log.getGrams() / 100) + " kcal");
+            if (nutritionalValues != null) {
+                // Inflar la vista para cada alimento
+                View foodView = getLayoutInflater().inflate(R.layout.food_item_log_button, foodLogContainer, false);
 
-            foodLogContainer.addView(foodView);
+                TextView foodNameText = foodView.findViewById(R.id.food_name);
+                TextView foodGramsText = foodView.findViewById(R.id.food_grams);
+                TextView foodCaloriesText = foodView.findViewById(R.id.food_calories);
+                TextView foodProteinsText = foodView.findViewById(R.id.food_proteins);
+                TextView foodCarbsText = foodView.findViewById(R.id.food_carbs);
+                TextView foodFatsText = foodView.findViewById(R.id.food_fats);
+
+                // Establecer los valores nutricionales
+                foodNameText.setText("Food ID: " + log.getFoodId()); // O puedes obtener el nombre del alimento si lo prefieres
+                foodGramsText.setText(log.getGrams() + "g");
+                foodProteinsText.setText(String.format(Locale.getDefault(), "%.2f g", nutritionalValues[0]));
+                foodCarbsText.setText(String.format(Locale.getDefault(), "%.2f g", nutritionalValues[1]));
+                foodFatsText.setText(String.format(Locale.getDefault(), "%.2f g", nutritionalValues[2]));
+
+                // Agregar la vista del alimento al contenedor
+                foodLogContainer.addView(foodView);
+            }
         }
-        */
     }
+
 
     private void setupUI() {
         getWindow().setStatusBarColor(Color.parseColor("#7AB8FF"));

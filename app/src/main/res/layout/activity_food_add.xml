@@ -60,15 +60,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/topBar"
         android:background="#6D6D6D"
-        android:gravity="center"
         android:elevation="10dp"
+        android:gravity="center"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/foodSelectionHeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Seleccionar Alimento"
@@ -79,8 +79,8 @@
         <ImageView
             android:id="@+id/foodSelectionIndicator"
             android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="20dp"
             android:src="@drawable/icon_expand_more" />
     </LinearLayout>
 
@@ -145,7 +145,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editGramsLayout"
         android:layout_centerHorizontal="true"
-        android:textSize="16sp" />
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <!-- Sección para mostrar datos nutricionales totales -->
     <TableLayout
@@ -158,7 +160,7 @@
         android:background="@drawable/border"
         android:elevation="10dp"
         android:paddingLeft="15dp"
-        android:paddingTop="16dp"
+        android:paddingTop="20dp"
         android:paddingRight="15dp"
         android:paddingBottom="24dp"
         android:translationX="-5dp">
@@ -534,22 +536,21 @@
             </LinearLayout>
         </TableRow>
 
-
     </TableLayout>
-
 
     <!-- Botón para añadir un nuevo alimento -->
     <LinearLayout
         android:id="@+id/btnSaveFoodLog"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
         android:layout_below="@id/totalNutritionTable"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/rounded_add_button"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp">
 
         <ImageView
             android:layout_width="30dp"
@@ -561,7 +562,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            android:text="Añadir Alimento"
+            android:text="Añadir comida"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>

@@ -8,6 +8,7 @@ public class FoodLog {
     private String date;   // Fecha de consumo
     private String mealType;  // Tipo de comida: Breakfast, Lunch, Snack, Dinner
 
+
     // Constructor por defecto
     public FoodLog() {
     }
@@ -29,6 +30,20 @@ public class FoodLog {
         this.grams = grams;
         this.date = date;
         this.mealType = mealType;
+    }
+
+    // Métodos para obtener los valores nutricionales como un arreglo de valores
+    public double[] getNutritionalValues(DatabaseHelper dbHelper) {
+        // Obtener el alimento correspondiente al foodId
+        Food food = dbHelper.getFoodById(this.foodId);
+        if (food != null) {
+            // Calcular los valores nutricionales en base a los gramos
+            double totalProteins = (food.getProtein() * this.grams) / 100.0;
+            double totalCarbs = (food.getCarbs() * this.grams) / 100.0;
+            double totalFats = (food.getFat() * this.grams) / 100.0;
+            return new double[]{totalProteins, totalCarbs, totalFats}; // Devolvemos un arreglo con estos tres valores
+        }
+        return null; // En caso de que no se encuentre el alimento
     }
 
 
@@ -80,4 +95,5 @@ public class FoodLog {
     public void setMealType(String mealType) {
         this.mealType = mealType;
     }
+
 }

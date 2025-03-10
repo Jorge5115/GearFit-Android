@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#AC89FB"
+    android:layout_margin="10dp">
+
+    <!-- Contenedor para el nombre del alimento, gramos y calorías -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical">
+
+        <TextView
+            android:id="@+id/food_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Food Name"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/food_grams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100g"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/food_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200 kcal"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Botón de edición en la misma fila -->
+        <ImageView
+            android:id="@+id/editFoodLogButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_edit"
+            android:layout_gravity="end"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Contenedor para los demás nutrientes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/food_proteins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5g"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:id="@+id/food_carbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30g"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:id="@+id/food_fats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10g"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</LinearLayout>

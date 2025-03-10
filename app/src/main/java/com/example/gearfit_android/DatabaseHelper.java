@@ -139,6 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EMAIL + "=? AND " + COLUMN_PASSWORD + "=?",
                 new String[]{email, password}, null, null, null);
 
+
         if (cursor != null && cursor.moveToFirst()) {
             User user = new User();
 
@@ -150,7 +151,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setHeight(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_HEIGHT)));
             user.setKcalObjective(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_KCAL_OBJECTIVE)));
 
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
             return user;
         }
         return null;
@@ -312,7 +316,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             double carbs = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CARBS));
             double fats = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CALORIES));
 
-            food = new Food(id, userId, name, calories, proteins, fats, carbs);
+            food = new Food(id, userId, name, calories, proteins, carbs, fats);
         }
 
         cursor.close();
@@ -324,11 +328,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insertFoodLog(FoodLog foodLog) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("userId", foodLog.getUserId());
-        values.put("foodId", foodLog.getFoodId());
-        values.put("grams", foodLog.getGrams());
-        db.insert("FoodLog", null, values);
+        values.put(COLUMN_LOG_USER_ID, foodLog.getUserId()); // Usamos COLUMN_LOG_USER_ID
+        values.put(COLUMN_LOG_FOOD_ID, foodLog.getFoodId()); // Usamos COLUMN_LOG_FOOD_ID
+        values.put(COLUMN_LOG_GRAMS, foodLog.getGrams());    // Usamos COLUMN_LOG_GRAMS
+        values.put(COLUMN_LOG_DATE, foodLog.getDate());      // Usamos COLUMN_LOG_DATE
+        values.put(COLUMN_LOG_MEAL_TYPE, foodLog.getMealType()); // Usamos COLUMN_LOG_MEAL_TYPE
+
+        // Insertamos en la tabla correcta: TABLE_FOOD_LOG
+        db.insert(TABLE_FOOD_LOG, null, values);
+        db.close();
     }
 
+    public List<FoodLog> getFoodLogsByDateAndMeal(int userId, String date, String mealType) {
+        List<FoodLog> foodLogs = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Definir la consulta SQL para obtener los registros de alimentos de acuerdo con el userId, fecha y tipo de comida
+        String query = "SELECT * FROM " + TABLE_FOOD_LOG +
+                " WHERE " + COLUMN_LOG_USER_ID + " = ? AND " +
+                COLUMN_LOG_DATE + " = ? AND " +
+                COLUMN_LOG_MEAL_TYPE + " = ?";
+
+        // Ejecutar la consulta con los parámetros proporcionados
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId), date, mealType});
+
+        // Verificar si la consulta devuelve resultados
+        if (cursor.moveToFirst()) {
+            do {
+                // Crear un objeto FoodLog para cada registro obtenido
+                FoodLog foodLog = new FoodLog();
+                foodLog.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LOG_ID)));
+                foodLog.setFoodId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LOG_FOOD_ID)));
+                foodLog.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LOG_USER_ID)));
+                foodLog.setGrams(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LOG_GRAMS)));
+                foodLog.setDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOG_DATE)));
+                foodLog.setMealType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOG_MEAL_TYPE)));
+
+                // Agregar el objeto FoodLog a la lista
+                foodLogs.add(foodLog);
+            } while (cursor.moveToNext());
+        }
+
+        // Cerrar el cursor y la base de datos
+        cursor.close();
+        db.close();
+
+        // Retornar la lista de FoodLogs
+        return foodLogs;
+    }
 
 }
