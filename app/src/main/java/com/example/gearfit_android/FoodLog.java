@@ -38,14 +38,28 @@ public class FoodLog {
         Food food = dbHelper.getFoodById(this.foodId);
         if (food != null) {
             // Calcular los valores nutricionales en base a los gramos
-            double totalProteins = (food.getProtein() * this.grams) / 100.0;
-            double totalCarbs = (food.getCarbs() * this.grams) / 100.0;
             double totalFats = (food.getFat() * this.grams) / 100.0;
-            return new double[]{totalProteins, totalCarbs, totalFats}; // Devolvemos un arreglo con estos tres valores
+            double totalCarbs = (food.getCarbs() * this.grams) / 100.0;
+            double totalProteins = (food.getProtein() * this.grams) / 100.0;
+            double totalCalories = (food.getCalories() * this.grams) / 100.0;
+
+            // Devolver un arreglo con los valores nutricionales
+            return new double[]{totalFats, totalCarbs, totalProteins, totalCalories};
         }
         return null; // En caso de que no se encuentre el alimento
     }
 
+    public String getFoodName(DatabaseHelper dbHelper) {
+        Food food = dbHelper.getFoodById(this.foodId);
+        if (food != null) {
+            // Obtener el nombre del alimento
+            String foodName = food.getName();
+
+            // Devolver el nombre del alimento
+            return new String (foodName);
+        }
+        return null; // En caso de que no se encuentre el alimento
+    }
 
     // Getters y Setters
     public int getId() {
@@ -95,5 +109,6 @@ public class FoodLog {
     public void setMealType(String mealType) {
         this.mealType = mealType;
     }
+
 
 }

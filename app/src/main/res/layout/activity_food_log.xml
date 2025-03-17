@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_grey">
@@ -69,10 +70,10 @@
             android:id="@+id/buttonEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:background="@drawable/transparent_button"
             android:text="Mi lista"
             android:textColor="@color/light_grey"
-            android:layout_marginRight="10dp"
             android:textStyle="bold" />
 
         <!-- Botón de alimentos registrados por el usuario -->
@@ -86,12 +87,112 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- LinearLayout para mostrar la información total de los alimentos seleccionados -->
+    <LinearLayout
+        android:id="@+id/foodLogInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editRemoveButtons"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Grupo de Grasas -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChartFats"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView
+                android:id="@+id/tvFats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grasas"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- Grupo de Carbohidratos -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChartCarbs"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView
+                android:id="@+id/tvCarbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carbohidratos"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- Grupo de Proteínas -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChartProteins"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView
+                android:id="@+id/tvProteins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proteínas"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- Grupo de Calorías -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChartCalories"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView
+                android:id="@+id/tvCalories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calorías"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
     <!-- Botón para añadir alimento -->
     <LinearLayout
         android:id="@+id/addFoodLogButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/editRemoveButtons"
+        android:layout_below="@id/foodLogInfo"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
