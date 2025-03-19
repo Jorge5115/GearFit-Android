@@ -4,15 +4,15 @@
     android:shape="rectangle">
 
     <!-- Color de fondo -->
-    <solid android:color="@color/light_grey" />
+    <solid android:color="@color/white" />
 
     <!-- Borde redondeado -->
-    <corners android:radius="20dp" />
+    <corners android:radius="10dp" />
 
     <!-- Borde con color y ancho -->
     <stroke
-        android:width="3dp"
-        android:color="#1f191b" />
+        android:width="2dp"
+        android:color="#947C7C7C" />
 
     <!-- Margen interno (opcional) -->
     <padding

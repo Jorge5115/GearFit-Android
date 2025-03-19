@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="@color/light_grey"
+    android:orientation="vertical">
+
+    <!-- Contenedor con efecto elevado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center">
+
+        <!-- Nombre del alimento -->
+        <TextView
+            android:id="@+id/textFoodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del alimento"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/grey"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Campo para ingresar la nueva cantidad -->
+        <EditText
+            android:id="@+id/editFoodQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese la nueva cantidad (g)"
+            android:textColor="@color/grey"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:background="@drawable/rounded_log_edit_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Información Nutricional -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@color/white"
+            android:layout_marginBottom="16dp"
+            android:radius="10dp">
+
+            <!-- Grasas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_fats_letter"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/textFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0g de Grasas"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Carbohidratos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_carbs_letter"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/textCarbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0g de Carbohidratos"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Proteínas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_proteins_letter"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/textProteins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0g de Proteínas"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Calorías -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_calories_letter"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/textCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 Calorías"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Botón para guardar cambios -->
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar cambios"
+            android:backgroundTint="@color/teal_700"/>
+
+        <!-- Botón para cancelar -->
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@android:color/darker_gray"/>
+    </LinearLayout>
+</LinearLayout>

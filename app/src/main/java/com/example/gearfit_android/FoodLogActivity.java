@@ -1,9 +1,12 @@
 package com.example.gearfit_android;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +20,13 @@ import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -27,13 +36,21 @@ public class FoodLogActivity extends AppCompatActivity {
     private int userId;
     private TextView mealTitleTextView;
     private TextView selectedDateTextView;
+
+    private LinearLayout foodLogInfo;
     private LinearLayout foodLogContainer;
 
+    // Botón para añadir alimento
     private LinearLayout addFoodLogButton;
 
-    private PieChart pieChartCalories, pieChartProteins, pieChartCarbs, pieChartFats;
+    private Button buttonList;
+
+    private TextView addFoodText;
+
+    private TextView totalFoodLogFats, totalFoodLogCarbs, totalFoodLogProteins, totalFoodLogCalories;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +73,31 @@ public class FoodLogActivity extends AppCompatActivity {
         // Formatear la fecha antes de mostrarla
         selectedDateTextView.setText(formattedDate);
 
-        // Referencias a los gráficos
-        pieChartCalories = findViewById(R.id.pieChartCalories);
-        pieChartProteins = findViewById(R.id.pieChartProteins);
-        pieChartCarbs = findViewById(R.id.pieChartCarbs);
-        pieChartFats = findViewById(R.id.pieChartFats);
+        // Botón para ir a la lista de alimentos
+        buttonList = findViewById(R.id.buttonList);
+        buttonList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FoodLogActivity.this, FoodListActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("currentMeal", mealTitle);
+                intent.putExtra("currentMealDate", selectedDate);
+                startActivity(intent);
+                overridePendingTransition(0, 0); // Elimina la animación de transición
+                finish();
+            }
+        });
+
+        foodLogInfo = findViewById(R.id.foodLogInfo);
+
+        totalFoodLogFats = findViewById(R.id.totalFoodLogFats);
+        totalFoodLogCarbs = findViewById(R.id.totalFoodLogCarbs);
+        totalFoodLogProteins = findViewById(R.id.totalFoodLogProteins);
+        totalFoodLogCalories = findViewById(R.id.totalFoodLogCalories);
 
         loadFoodLog(selectedDate, mealTitle);
 
+        // Botón para añadir alimento (Funcional)
         addFoodLogButton = findViewById(R.id.addFoodLogButton);
         addFoodLogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,55 +109,23 @@ public class FoodLogActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Botón para añadir alimento (Visual)
+        addFoodText = findViewById(R.id.addFoodText);
+        addFoodLogButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.add_food_log_pressed);
+                    addFoodText.setTextColor(Color.WHITE);
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setBackgroundResource(R.drawable.add_food_button);
+                    addFoodText.setTextColor(Color.parseColor("#5A78A2"));
+                }
+                return false; // Permite que el evento continúe propagándose (para que siga funcionando el OnClick)
+            }
+        });
     }
-
-    private void setupPieChart(PieChart chart, String label, float value, float maxValue) {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-
-        if (value > maxValue) {
-            // Si se excede el límite, llenar todo el círculo de rojo
-            entries.add(new PieEntry(1f, ""));
-        } else {
-            entries.add(new PieEntry(value, "")); // Porción rellena
-            entries.add(new PieEntry(maxValue - value, "")); // Porción vacía
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries, "");
-
-        if (value > maxValue) {
-            dataSet.setColors(Color.RED); // Todo rojo si se pasa
-        } else {
-            dataSet.setColors(new int[]{Color.BLUE, Color.parseColor("#f7f7f7")}); // Azul para progreso, gris para el resto
-        }
-
-        dataSet.setDrawValues(false); // Ocultar valores dentro del gráfico
-
-        PieData data = new PieData(dataSet);
-        chart.setData(data);
-
-        // **Estilo de dona**
-        chart.setUsePercentValues(false);
-        chart.getDescription().setEnabled(false);
-        chart.setDrawHoleEnabled(true);
-        chart.setHoleRadius(60f); // Tamaño del agujero central
-        chart.setTransparentCircleRadius(45f); // Círculo semitransparente alrededor
-        chart.setHoleColor(Color.parseColor("#f7f7f7")); // Color del círculo interior
-
-        // **Hacer que empiece en las 12 (90°) y se llene en sentido horario**
-        chart.setRotationAngle(-90); // Comienza desde arriba (posición de las 12)
-        chart.setRotationEnabled(false); // Evita que el usuario lo gire
-
-        // **Quitar las leyendas**
-        chart.getLegend().setEnabled(false);
-
-        // **Quitar el efecto de selección al tocar**
-        chart.setHighlightPerTapEnabled(false);
-
-        chart.invalidate(); // Refrescar el gráfico
-    }
-
-
-
 
     private String formatDate(String dateString) {
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -148,11 +150,10 @@ public class FoodLogActivity extends AppCompatActivity {
         }
 
         float totalCalories = 0, totalProteins = 0, totalCarbs = 0, totalFats = 0;
-        float dailyLimit = 4000; // Esto lo cambiarás luego para que sea configurable
 
         foodLogContainer.removeAllViews();
         for (FoodLog log : foodLogs) {
-            // Obtener los valores nutricionales usando el método getNutritionalValues
+            // Obtener los valores nutricionales
             double[] nutritionalValues = log.getNutritionalValues(dbHelper);
 
             if (nutritionalValues != null) {
@@ -173,24 +174,61 @@ public class FoodLogActivity extends AppCompatActivity {
                 TextView foodFatsText = foodView.findViewById(R.id.food_fats);
 
                 // Establecer los valores nutricionales
-                foodNameText.setText(log.getFoodName(dbHelper)); 
-                foodGramsText.setText(String.format(Locale.getDefault(), "%.2f g", log.getGrams()));
-                foodFatsText.setText(String.format(Locale.getDefault(), "%.2f g", nutritionalValues[0]));
-                foodCarbsText.setText(String.format(Locale.getDefault(), "%.2f g", nutritionalValues[1]));
-                foodProteinsText.setText(String.format(Locale.getDefault(), "%.2f g", nutritionalValues[2]));
-                foodCaloriesText.setText(String.format(Locale.getDefault(), "%.2f kcal", nutritionalValues[3]));
+                foodNameText.setText(log.getFoodName(dbHelper));
+                foodGramsText.setText("Cantidad: " + formatNumber(log.getGrams()) + " gramos");
+                foodFatsText.setText(formatNumber(nutritionalValues[0]));
+                foodCarbsText.setText(formatNumber(nutritionalValues[1]));
+                foodProteinsText.setText(formatNumber(nutritionalValues[2]));
+                foodCaloriesText.setText(formatNumber(nutritionalValues[3]));
+
+                // Agregar listener para ir a FoodLogEditActivity
+                foodView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FoodLogActivity.this, FoodLogEditActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
+                        intent.putExtra("currentMealDate", date);
+
+                        // Pasar los valores nutricionales a FoodLogEditActivity
+                        intent.putExtra("foodLogId", log.getId());
+                        intent.putExtra("grams", log.getGrams());
+                        intent.putExtra("fats", nutritionalValues[0]);
+                        intent.putExtra("carbs", nutritionalValues[1]);
+                        intent.putExtra("proteins", nutritionalValues[2]);
+                        intent.putExtra("calories", nutritionalValues[3]);
+                        intent.putExtra("foodName", log.getFoodName(dbHelper));
+
+                        startActivity(intent);
+                        finish();
+                    }
+                });
 
                 // Agregar la vista del alimento al contenedor
                 foodLogContainer.addView(foodView);
+
+                // Total de cada valor acumulado
+                totalFoodLogFats.setText(formatNumber(totalFats));
+                totalFoodLogCarbs.setText(formatNumber(totalCarbs));
+                totalFoodLogProteins.setText(formatNumber(totalProteins));
+                totalFoodLogCalories.setText(formatNumber(totalCalories));
             }
         }
 
-        setupPieChart(pieChartFats, "", totalFats, 100);
-        setupPieChart(pieChartCarbs, "", totalCarbs, 300);
-        setupPieChart(pieChartProteins, "", totalProteins, 200);
-        setupPieChart(pieChartCalories, "", totalCalories, dailyLimit);
+        if (foodLogs.isEmpty()) {
+            foodLogInfo.setVisibility(View.GONE);  // Oculta la sección si no hay alimentos
+        } else {
+            foodLogInfo.setVisibility(View.VISIBLE);  // Muestra la sección si hay alimentos
+        }
     }
 
+    public static String formatNumber(double number) {
+        if (number % 1 == 0) {
+            return String.format(Locale.getDefault(), "%.0f", number); // Si es un número entero, sin decimales
+        } else {
+            return String.format(Locale.getDefault(), "%.2f", number); // Si tiene decimales, muestra dos
+        }
+    }
 
     private void setupUI() {
         getWindow().setStatusBarColor(Color.parseColor("#7AB8FF"));

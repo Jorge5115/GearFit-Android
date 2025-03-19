@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#B5D7FD"
+        android:elevation="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"> <!-- Agregar padding aquí -->
@@ -61,13 +62,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/topBar"
+        android:layout_marginBottom="10dp"
         android:background="#B5D7FD"
+        android:elevation="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <!-- Botón de los alimentos agregados en la comida actual -->
         <Button
-            android:id="@+id/buttonEdit"
+            android:id="@+id/buttonLog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -78,7 +81,7 @@
 
         <!-- Botón de alimentos registrados por el usuario -->
         <Button
-            android:id="@+id/buttonRemove"
+            android:id="@+id/buttonList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/transparent_button"
@@ -91,99 +94,102 @@
     <LinearLayout
         android:id="@+id/foodLogInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@id/editRemoveButtons"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:paddingTop="20dp">
 
-        <!-- Grupo de Grasas -->
-        <LinearLayout
+        <!-- Grasas -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_fats_letter" />
+
+        <TextView
+            android:id="@+id/totalFoodLogFats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
+            android:text="50"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChartFats"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_plus_v2" />
 
-            <TextView
-                android:id="@+id/tvFats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Grasas"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"/>
-        </LinearLayout>
+        <!-- Carbohidratos -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_carbs_letter" />
 
-        <!-- Grupo de Carbohidratos -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/totalFoodLogCarbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
+            android:text="200"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChartCarbs"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_plus_v2" />
 
-            <TextView
-                android:id="@+id/tvCarbs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Carbohidratos"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"/>
-        </LinearLayout>
 
-        <!-- Grupo de Proteínas -->
-        <LinearLayout
+        <!-- Proteínas -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_proteins_letter" />
+
+        <TextView
+            android:id="@+id/totalFoodLogProteins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
+            android:text="140"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChartProteins"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_equals" />
 
-            <TextView
-                android:id="@+id/tvProteins"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Proteínas"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"/>
-        </LinearLayout>
 
-        <!-- Grupo de Calorías -->
-        <LinearLayout
+        <!-- Calorías -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_calories_letter" />
+
+        <TextView
+            android:id="@+id/totalFoodLogCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChartCalories"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <TextView
-                android:id="@+id/tvCalories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calorías"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"/>
-        </LinearLayout>
-
+            android:layout_marginBottom="2dp"
+            android:text="2200"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
@@ -213,7 +219,7 @@
     <ScrollView
         android:id="@+id/foodLogScrollView"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/addFoodLogButton"
         android:layout_marginTop="16dp">
 
@@ -224,7 +230,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Ejemplo de botón de alimento (se replicará dinámicamente) -->
         </LinearLayout>
     </ScrollView>
 

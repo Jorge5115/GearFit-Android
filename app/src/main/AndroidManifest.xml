@@ -33,6 +33,7 @@
         <activity android:name=".FoodLogActivity" />
         <activity android:name=".AddFoodLogActivity" />
         <activity android:name=".SelectFoodLogActivity" />
+        <activity android:name=".FoodLogEditActivity" />
 
     </application>
 

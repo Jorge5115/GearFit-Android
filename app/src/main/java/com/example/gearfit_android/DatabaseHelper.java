@@ -314,7 +314,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int calories = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CALORIES));
             double proteins = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_PROTEIN));
             double carbs = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CARBS));
-            double fats = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_CALORIES));
+            double fats = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_FOOD_FAT));
 
             food = new Food(id, userId, name, calories, proteins, carbs, fats);
         }
@@ -375,6 +375,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Retornar la lista de FoodLogs
         return foodLogs;
+    }
+
+    public void updateFoodLogQuantity(int foodLogId, double newQuantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_LOG_GRAMS, newQuantity); // Actualizar la cantidad de gramos
+
+        int rowsAffected = db.update(TABLE_FOOD_LOG, values, COLUMN_LOG_ID + " = ?", new String[]{String.valueOf(foodLogId)});
+
+        if (rowsAffected > 0) {
+            Log.d("DatabaseHelper", "Cantidad actualizada en food_log para log_id: " + foodLogId);
+        } else {
+            Log.d("DatabaseHelper", "No se encontró el registro en food_log con log_id: " + foodLogId);
+        }
+
+        db.close();
     }
 
 }

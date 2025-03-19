@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                intent.putExtra("userId", userId); // Pasar datos si es necesario
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NutritionActivity.class);
-                intent.putExtra("userId", userId); // Pasar datos si es necesario
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });

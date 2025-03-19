@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -32,6 +34,8 @@ public class FoodListActivity extends AppCompatActivity {
     // Elementos de la interfaz de usuario
     private LinearLayout foodItemContainer;
     private LinearLayout addFoodButton;
+
+    private Button buttonLog;
 
     // Campo de búsqueda
     private EditText searchFoodEditText;
@@ -63,6 +67,21 @@ public class FoodListActivity extends AppCompatActivity {
 
         // Formatear la fecha antes de mostrarla
         selectedDateTextView.setText(formattedDate);
+
+        // Botón para ir al log de alimentos diario
+        buttonLog = findViewById(R.id.buttonLog);
+        buttonLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FoodListActivity.this, FoodLogActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("currentMeal", mealTitle);
+                intent.putExtra("currentMealDate", selectedDate);
+                startActivity(intent);
+                overridePendingTransition(0, 0); // Elimina la animación de transición
+                finish();
+            }
+        });
 
         foodItemContainer = findViewById(R.id.foodItemContainer);
         loadUserFoods();
@@ -146,7 +165,7 @@ public class FoodListActivity extends AppCompatActivity {
 
             // Asigna el nombre del alimento y las calorías
             foodNameText.setText(food.getName());
-            foodCaloriesText.setText(food.getCalories()+ " kcal/100g");
+            foodCaloriesText.setText(food.getCalories() + " kcal/100g");
 
             // Configura un click listener (si es necesario)
             foodView.setOnClickListener(new View.OnClickListener() {
