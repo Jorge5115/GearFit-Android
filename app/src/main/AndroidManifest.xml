@@ -34,6 +34,8 @@
         <activity android:name=".AddFoodLogActivity" />
         <activity android:name=".SelectFoodLogActivity" />
         <activity android:name=".FoodLogEditActivity" />
+        <activity android:name=".BarcodeScannerActivity" />
+
 
     </application>
 

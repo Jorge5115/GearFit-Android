@@ -20,15 +20,15 @@ import java.util.Locale;
 public class FoodLogEditActivity extends AppCompatActivity {
 
     private int userId;
+    private int foodLogId;
     private String meal, date;
-
     private EditText editFoodQuantity;
     private TextView textFoodName, textFat, textCarbs, textProteins, textCalories;
-    private Button buttonSave, buttonCancel;
-    private int foodLogId;
+    private double fatPerGram, carbsPerGram, proteinPerGram, caloriesPerGram;
     private double originalQuantity;
     private double newQuantity;
-    private double fatPerGram, carbsPerGram, proteinPerGram, caloriesPerGram;
+    private Button buttonSave, buttonCancel, buttonDelete;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +39,14 @@ public class FoodLogEditActivity extends AppCompatActivity {
         // Obtener referencias a los elementos de la interfaz
         textFoodName = findViewById(R.id.textFoodName);
         editFoodQuantity = findViewById(R.id.editFoodQuantity);
+
         textFat = findViewById(R.id.textFat);
         textCarbs = findViewById(R.id.textCarbs);
         textProteins = findViewById(R.id.textProteins);
         textCalories = findViewById(R.id.textCalories);
         buttonSave = findViewById(R.id.buttonSave);
         buttonCancel = findViewById(R.id.buttonCancel);
+        buttonDelete = findViewById(R.id.buttonDelete);
 
         // Obtener los datos del Intent
         userId = getIntent().getIntExtra("userId", -1);
@@ -59,7 +61,7 @@ public class FoodLogEditActivity extends AppCompatActivity {
         double totalProteins = getIntent().getDoubleExtra("proteins", 0);
         double totalCalories = getIntent().getDoubleExtra("calories", 0);
 
-        // **Calcular valores por gramo**
+        // Calcular valores por gramo
         fatPerGram = totalFat / originalQuantity;
         carbsPerGram = totalCarbs / originalQuantity;
         proteinPerGram = totalProteins / originalQuantity;
@@ -98,7 +100,28 @@ public class FoodLogEditActivity extends AppCompatActivity {
         });
 
         buttonSave.setOnClickListener(v -> saveChanges());
-        buttonCancel.setOnClickListener(v -> finish());
+
+        buttonCancel.setOnClickListener(v -> {
+            Intent intent = new Intent(FoodLogEditActivity.this, FoodLogActivity.class);
+            intent.putExtra("userId", userId);
+            intent.putExtra("currentMeal", meal);
+            intent.putExtra("currentMealDate", date);
+            startActivity(intent);
+            finish();
+        });
+
+        buttonDelete.setOnClickListener(v -> {
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            dbHelper.deleteFoodLog(foodLogId);
+
+            Intent intent = new Intent(FoodLogEditActivity.this, FoodLogActivity.class);
+            intent.putExtra("userId", userId);
+            intent.putExtra("currentMeal", meal);
+            intent.putExtra("currentMealDate", date);
+            startActivity(intent);
+            finish();
+        });
+
     }
 
 
@@ -113,7 +136,7 @@ public class FoodLogEditActivity extends AppCompatActivity {
 
     private void saveChanges() {
         String newQuantityStr = editFoodQuantity.getText().toString();
-        if (!newQuantityStr.isEmpty()) {
+        if (!newQuantityStr.isEmpty() || newQuantityStr.equals("0")) {
             double newQuantity = Double.parseDouble(newQuantityStr);
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             dbHelper.updateFoodLogQuantity(foodLogId, newQuantity);

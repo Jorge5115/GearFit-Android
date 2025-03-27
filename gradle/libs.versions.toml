@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.8.2"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -7,6 +7,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 viewpager2 = "1.1.0"
 mpandroidchart = "v3.1.0"
+mlkit-barcode-scanning = "17.3.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -16,6 +17,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
+mlkit-barcode-scanning = "com.google.mlkit:barcode-scanning:17.3.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

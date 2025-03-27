@@ -393,4 +393,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public void deleteFoodLog(int foodLogId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(TABLE_FOOD_LOG, COLUMN_LOG_ID + " = ?", new String[]{String.valueOf(foodLogId)});
+
+        if (rowsDeleted > 0) {
+            Log.d("DatabaseHelper", "Registro eliminado de food_log con log_id: " + foodLogId);
+        } else {
+            Log.d("DatabaseHelper", "No se encontró el registro en food_log con log_id: " + foodLogId);
+        }
+
+        db.close();
+    }
+
 }

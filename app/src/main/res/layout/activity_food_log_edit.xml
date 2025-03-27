@@ -1,169 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@drawable/gradient_background"
     android:gravity="center"
-    android:background="@color/light_grey"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <!-- Contenedor con efecto elevado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:background="@color/white"
-        android:elevation="10dp"
+        android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:layout_gravity="center">
+        android:background="@color/light_grey"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <!-- Nombre del alimento -->
         <TextView
             android:id="@+id/textFoodName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
             android:text="Nombre del alimento"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:textColor="@color/grey"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginRight="60dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <!-- Campo para ingresar la nueva cantidad -->
         <EditText
             android:id="@+id/editFoodQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingrese la nueva cantidad (g)"
-            android:textColor="@color/grey"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_log_edit_background"
+            android:hint="Introduce la nueva cantidad deseada"
             android:inputType="numberDecimal"
             android:padding="10dp"
-            android:background="@drawable/rounded_log_edit_background"
-            android:layout_marginBottom="16dp"/>
+            android:textColorHint="@color/grey" />
+
+        <!-- Fecha seleccionada -->
+        <TextView
+            android:id="@+id/warningGramsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-12dp"
+            android:gravity="center"
+            android:text="AVISO DE CANTIDAD"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <!-- Información Nutricional -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:background="@color/white"
             android:layout_marginBottom="16dp"
-            android:radius="10dp">
+            android:background="@color/light_grey"
+            android:orientation="vertical">
 
             <!-- Grasas -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/icon_fats_letter"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/icon_fats_letter" />
 
                 <TextView
                     android:id="@+id/textFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="0g de Grasas"
-                    android:textSize="16sp"
                     android:textColor="@android:color/black"
-                    android:layout_marginStart="8dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- Carbohidratos -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/icon_carbs_letter"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/icon_carbs_letter" />
 
                 <TextView
                     android:id="@+id/textCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="0g de Carbohidratos"
-                    android:textSize="16sp"
                     android:textColor="@android:color/black"
-                    android:layout_marginStart="8dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- Proteínas -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/icon_proteins_letter"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/icon_proteins_letter" />
 
                 <TextView
                     android:id="@+id/textProteins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="0g de Proteínas"
-                    android:textSize="16sp"
                     android:textColor="@android:color/black"
-                    android:layout_marginStart="8dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- Calorías -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/icon_calories_letter"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/icon_calories_letter" />
 
                 <TextView
                     android:id="@+id/textCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="0 Calorías"
-                    android:textSize="16sp"
                     android:textColor="@android:color/black"
-                    android:layout_marginStart="8dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Botón para guardar cambios -->
-        <Button
-            android:id="@+id/buttonSave"
+        <!-- Contenedor para "Guardar" y "Eliminar" en la misma fila -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar cambios"
-            android:backgroundTint="@color/teal_700"/>
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <!-- Botón para cancelar -->
+            <!-- Botón para eliminar alimento (más pequeño) -->
+            <Button
+                android:id="@+id/buttonDelete"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/red"
+                android:padding="10dp"
+                android:text="ELIMINAR"
+                android:textColor="@android:color/white" />
+
+            <!-- Botón para guardar cambios (tamaño normal) -->
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/blue"
+                android:padding="10dp"
+                android:text="Guardar" />
+        </LinearLayout>
+
+        <!-- Botón para cancelar (alargado) -->
         <Button
             android:id="@+id/buttonCancel"
-            android:layout_width="match_parent"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@android:color/darker_gray"/>
+            android:backgroundTint="@android:color/darker_gray"
+            android:padding="12dp"
+            android:text="Cancelar" />
+
+
     </LinearLayout>
 </LinearLayout>
