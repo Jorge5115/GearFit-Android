@@ -1,5 +1,6 @@
 package com.example.gearfit_android;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class FoodListActivity extends AppCompatActivity {
     // Lista filtrada de alimentos
     private List<Food> filteredFoodList;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +94,21 @@ public class FoodListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FoodListActivity.this, FoodCreateActivity.class);
                 intent.putExtra("userId", userId);
+                intent.putExtra("currentMeal", mealTitle);
+                intent.putExtra("currentMealDate", selectedDate);
                 startActivity(intent);
+            }
+        });
+
+        addFoodButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.rounded_pressed_add_background); // Fondo al presionar
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setBackgroundResource(R.drawable.rounded_add_background); // Fondo normal al soltar
+                }
+                return false;
             }
         });
 

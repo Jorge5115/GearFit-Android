@@ -1,143 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:backgroundTint="@color/light_grey">
+    android:background="@drawable/gradient_background"
+    android:gravity="center"
+    android:padding="16dp">
+
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Crear Alimento"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:layout_gravity="center_horizontal"
-            android:paddingBottom="24dp" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:text="Registrar nuevo alimento"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/btnScanBarcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_scan_code"
+                    app:tint="#BF0B8C1B" />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <!-- Input for food name -->
         <EditText
             android:id="@+id/etFoodName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre del alimento"
-            android:inputType="text" />
+            android:backgroundTint="@color/black"
+            android:hint="Nombre del alimento (Limite 30 caract)"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"/>
 
         <!-- Section title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Información Nutricional"
-            android:textSize="18sp"
-            android:textColor="@color/black"
             android:layout_marginTop="24dp"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="8dp"
+            android:text="Información Nutricional / 100g"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <!-- Input for calories -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_calories_letter" />
+
             <EditText
                 android:id="@+id/etCalories"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="Calorías"
-                android:inputType="number" />
+                android:backgroundTint="@color/black"
+                android:hint="Añade calorias"
+                android:inputType="number"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="kcal / 100g" />
-        </LinearLayout>
-
-        <!-- Input for protein -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <EditText
-                android:id="@+id/etProtein"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Proteínas"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="g / 100g" />
-        </LinearLayout>
-
-        <!-- Input for carbohydrates -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <EditText
-                android:id="@+id/etCarbs"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Carbohidratos"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="g / 100g" />
         </LinearLayout>
 
         <!-- Input for fat -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_fats_letter" />
 
             <EditText
                 android:id="@+id/etFat"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="Grasas"
-                android:inputType="numberDecimal" />
+                android:backgroundTint="@color/black"
+                android:hint="Añade grasas"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey" />
 
-            <TextView
+        </LinearLayout>
+
+
+        <!-- Input for carbohydrates -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="g / 100g" />
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_carbs_letter" />
+
+            <EditText
+                android:id="@+id/etCarbs"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:hint="Añade carbohidratos"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey" />
+
+        </LinearLayout>
+
+        <!-- Input for protein -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_proteins_letter" />
+
+            <EditText
+                android:id="@+id/etProtein"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:hint="Añade proteínas"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey" />
+
         </LinearLayout>
 
         <!-- Button to save food -->
         <Button
             android:id="@+id/btnSaveFood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guardar"
-            android:layout_marginTop="24dp" />
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/blue"
+            android:elevation="10dp"
+            android:text="Registrar Alimento"
+            android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/btnScanBarcode"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnCancelFood"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Escanear Código"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/grey"
+            android:elevation="10dp"
+            android:text="Cancelar registro"
+            android:textColor="@color/white"
+            android:layout_marginBottom="15dp"/>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

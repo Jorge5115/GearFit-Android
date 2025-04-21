@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     android:gravity="center"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <!-- Contenedor con efecto elevado -->
@@ -15,20 +14,18 @@
         android:layout_margin="16dp"
         android:background="@color/light_grey"
         android:elevation="10dp"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="15dp">
 
         <!-- Nombre del alimento -->
         <TextView
             android:id="@+id/textFoodName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
-            android:text="Nombre del alimento"
+            android:text="Pechuga de pollo a la plancha"
             android:textColor="@color/grey"
-            android:layout_marginRight="60dp"
             android:textSize="20sp"
             android:textStyle="bold" />
 

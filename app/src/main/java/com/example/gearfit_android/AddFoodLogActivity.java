@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,8 @@ public class AddFoodLogActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
     // Elementos de la interfaz de usuario
+
+    private ImageView backButton;
     private LinearLayout foodSelectionHeader;
     private TextView foodSelectionHeaderText;
 
@@ -60,8 +63,8 @@ public class AddFoodLogActivity extends AppCompatActivity {
 
     TextView btnSaveFoodTextView;
 
-    private static final int MAX_GRAMS = 2000;
-    private static final int WARNING_GRAMS = 1000;
+    private static final int MAX_GRAMS = 1000;
+    private static final int WARNING_GRAMS = 500;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -78,8 +81,22 @@ public class AddFoodLogActivity extends AppCompatActivity {
 
         selectDateUnformatted = selectedDate;
 
+        backButton = findViewById(R.id.buttonBack);
         mealTitleTextView = findViewById(R.id.currentMeal);
         selectedDateTextView = findViewById(R.id.currentMealDate);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddFoodLogActivity.this, FoodLogActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
+                intent.putExtra("currentMealDate", selectDateUnformatted);
+
+                startActivity(intent);
+                finish();
+            }
+        });
 
         editGramsLayout = findViewById(R.id.editGramsLayout);
         editGramsLayout.setVisibility(View.GONE);
@@ -105,7 +122,17 @@ public class AddFoodLogActivity extends AppCompatActivity {
         btnSaveFoodLog = findViewById(R.id.btnSaveFoodLog);
         btnSaveFoodTextView = findViewById(R.id.btnSaveFoodTextView);
 
-        btnSaveFoodTextView.setText("Selecciona un Alimento");
+        btnSaveFoodLog.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.rounded_add_pressed_button);
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setBackgroundResource(R.drawable.rounded_add_button);
+                }
+                return false; // Permite que el evento continúe propagándose (para que siga funcionando el OnClick)
+            }
+        });
 
         // Mostrar la comida actual y la fecha formateada
         mealTitleTextView.setText(mealTitle);
@@ -156,6 +183,9 @@ public class AddFoodLogActivity extends AppCompatActivity {
                     try {
                         int grams = Integer.parseInt(input);
 
+                        // Ocultar o mostrar el botón según el valor de gramos
+                        btnSaveFoodLog.setVisibility(grams > 0 ? View.VISIBLE : View.GONE);
+
                         // Actualizar el texto del botón con los gramos seleccionados
                         btnSaveFoodTextView.setText("Añadir " + grams + "g a " + mealTitleTextView.getText().toString());
 
@@ -201,6 +231,18 @@ public class AddFoodLogActivity extends AppCompatActivity {
                 intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
                 intent.putExtra("currentMealDate", selectedDate);
                 startActivityForResult(intent, 1);
+            }
+        });
+
+        foodSelectionHeader.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundColor(Color.parseColor("#505050"));
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setBackgroundColor(Color.parseColor("#6D6D6D"));
+                }
+                return false; // Permite que el evento continúe propagándose (para que siga funcionando el OnClick)
             }
         });
     }
@@ -296,7 +338,13 @@ public class AddFoodLogActivity extends AppCompatActivity {
 
         dbHelper.insertFoodLog(newLog);
 
-        Toast.makeText(this, "Alimento agregado al historial", Toast.LENGTH_SHORT).show();
+        //Se realiza la devolucion aqui, ya que el log ya ha sido guardado.
+        Intent intent = new Intent(AddFoodLogActivity.this, FoodLogActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
+        intent.putExtra("currentMealDate", selectDateUnformatted);
+
+        startActivity(intent);
         finish();
     }
 

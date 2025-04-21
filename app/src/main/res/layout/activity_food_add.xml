@@ -17,8 +17,8 @@
         <!-- Botón de volver -->
         <ImageView
             android:id="@+id/buttonBack"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
             android:src="@drawable/icon_close" />
@@ -57,7 +57,7 @@
     <LinearLayout
         android:id="@+id/foodSelectionHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@id/topBar"
         android:background="#6D6D6D"
         android:elevation="10dp"
@@ -332,7 +332,7 @@
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
                 android:gravity="left"
                 android:orientation="vertical">
@@ -353,7 +353,7 @@
             <LinearLayout
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:gravity="end"
@@ -376,7 +376,7 @@
             <LinearLayout
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:orientation="vertical">
@@ -550,7 +550,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="18dp"
-        android:paddingRight="18dp">
+        android:paddingRight="18dp"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="30dp"

@@ -20,8 +20,8 @@
         <!-- Botón de volver -->
         <ImageView
             android:id="@+id/buttonBack"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
             android:src="@drawable/icon_close" /> <!-- Margen a la derecha -->
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="@drawable/transparent_button"
-            android:text="Mi lista"
+            android:text="Registro Diario"
             android:textColor="@color/light_grey"
             android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/transparent_button"
-            android:text="Alimentos registrados"
+            android:text="Alimentos"
             android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>

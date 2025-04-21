@@ -7,7 +7,7 @@
     <solid android:color="@color/light_grey" />
 
     <!-- Borde redondeado -->
-    <corners android:radius="20dp" />
+    <corners android:radius="15dp" />
 
     <!-- Borde con color y ancho -->
     <stroke

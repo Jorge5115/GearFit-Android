@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#B5D7FD"
+        android:elevation="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"> <!-- Agregar padding aquí -->
@@ -18,8 +19,8 @@
         <!-- Botón de volver -->
         <ImageView
             android:id="@+id/buttonBack"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
             android:src="@drawable/icon_close" /> <!-- Margen a la derecha -->
@@ -60,7 +61,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/topBar"
+        android:layout_marginBottom="10dp"
         android:background="#B5D7FD"
+        android:elevation="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -69,10 +72,10 @@
             android:id="@+id/buttonLog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/transparent_button"
-            android:text="Mi lista"
-            android:textColor="@color/black"
             android:layout_marginRight="10dp"
+            android:background="@drawable/transparent_button"
+            android:text="Registro Diario"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <!-- Botón de alimentos registrados por el usuario -->
@@ -81,46 +84,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/transparent_button"
-            android:text="Alimentos registrados"
+            android:text="Alimentos"
             android:textColor="@color/light_grey"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Barra de búsqueda -->
+    <!-- Barra de búsqueda y botón "REGISTER NEW FOOD" en la misma fila -->
     <LinearLayout
-        android:id="@+id/searchBar"
+        android:id="@+id/buttonsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editRemoveButtons"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/rounded_search_background"
-        android:padding="8dp">
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <!-- Contenedor de búsqueda -->
+        <LinearLayout
+            android:id="@+id/searchBar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/icon_search" />
+            android:layout_weight="1"
+            android:background="@drawable/rounded_search_background"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-        <EditText
-            android:id="@+id/editSearchFood"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
-            android:hint="Búsqueda de alimentos"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:padding="4dp" />
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/icon_search" />
+
+            <EditText
+                android:id="@+id/editSearchFood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Búsqueda de alimentos"
+                android:inputType="text"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </LinearLayout>
+
+        <!-- Botón de agregar alimento -->
+        <LinearLayout
+            android:id="@+id/addFoodButton"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_add_background"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/icon_register_food" />
+        </LinearLayout>
     </LinearLayout>
+
 
     <ScrollView
         android:id="@+id/foodItemScrollView"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:layout_below="@id/searchBar"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonsContainer"
         android:layout_marginTop="16dp">
 
         <!-- Contenedor para los botones de alimento -->
@@ -128,32 +162,12 @@
             android:id="@+id/foodItemContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Ejemplo de botón de alimento (se replicará dinámicamente) -->
+            <!-- Aquí irán los alimentos (se replicará dinámicamente) -->
 
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/addFoodButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/foodItemScrollView"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/add_food_button"
-        android:gravity="center"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/addFoodText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="REGISTER NEW FOOD"
-            android:textColor="@color/orange"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
 </RelativeLayout>

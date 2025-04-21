@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.2"
+agp = "8.9.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -8,6 +8,14 @@ material = "1.12.0"
 viewpager2 = "1.1.0"
 mpandroidchart = "v3.1.0"
 mlkit-barcode-scanning = "17.3.0"
+camerax-core = "1.3.0"
+camerax-lifecycle = "1.3.0"
+camerax-view = "1.3.0"
+camerax-extensions = "1.3.0"
+lifecycle-runtime = "2.6.2"
+lifecycle-livedata = "2.6.2"
+lifecycle-viewmodel = "2.6.2"
+guava = "31.0.1-android"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -18,6 +26,20 @@ material = { group = "com.google.android.material", name = "material", version.r
 viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 mlkit-barcode-scanning = "com.google.mlkit:barcode-scanning:17.3.0"
+
+# CameraX para escaneo en tiempo real
+camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax-core" }
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax-lifecycle" }
+camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax-view" }
+camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "camerax-extensions" }
+
+# LiveData y ViewModel (para gestionar estados y evitar bloqueos de UI)
+lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-viewmodel" }
+
+# Guava para manejo de procesos asincrónicos (necesario para CameraX)
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

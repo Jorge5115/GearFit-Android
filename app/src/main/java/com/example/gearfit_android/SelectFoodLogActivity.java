@@ -15,8 +15,7 @@ public class SelectFoodLogActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private int userId;
 
-    private String mealTitle;
-    private String selectedDate;
+    private String mealTitle, selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +35,11 @@ public class SelectFoodLogActivity extends AppCompatActivity {
 
     private void loadFoodButtons() {
         List<Food> foodList = dbHelper.getFoodsByUserId(userId);
+
+        if (foodList.isEmpty()) {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
 
         for (Food food : foodList) {
             Button foodButton = new Button(this);
