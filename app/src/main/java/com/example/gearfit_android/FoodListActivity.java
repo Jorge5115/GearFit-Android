@@ -187,7 +187,13 @@ public class FoodListActivity extends AppCompatActivity {
             foodView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Acción cuando se presiona un alimento (opcional)
+                    Intent intent = new Intent(FoodListActivity.this, FoodListEditActivity.class);
+                    intent.putExtra("userId", userId); // si querés seguir pasando también el userId
+                    intent.putExtra("foodId", food.getId()); // pasás el ID del alimento
+                    intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
+                    intent.putExtra("currentMealDate", selectedDateTextView.getText().toString());
+                    startActivity(intent);
+                    finish();
                 }
             });
 

@@ -189,7 +189,7 @@ public class AddFoodLogActivity extends AppCompatActivity {
                         // Actualizar el texto del botón con los gramos seleccionados
                         btnSaveFoodTextView.setText("Añadir " + grams + "g a " + mealTitleTextView.getText().toString());
 
-                        if (grams > MAX_GRAMS) {
+                        if (grams >= MAX_GRAMS) {
                             editTextGrams.setText(String.valueOf(MAX_GRAMS));
                             editTextGrams.setSelection(editTextGrams.getText().length());
                             warningGramsTextView.setText("Máximo permitido: " + MAX_GRAMS + "g por temas de salud");

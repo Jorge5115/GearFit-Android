@@ -1,15 +1,19 @@
 package com.example.gearfit_android;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,14 +26,20 @@ public class FoodLogEditActivity extends AppCompatActivity {
     private int userId;
     private int foodLogId;
     private String meal, date;
-    private EditText editFoodQuantity;
-    private TextView textFoodName, textFat, textCarbs, textProteins, textCalories;
+    private EditText editTextGrams;
+    private TextView textFoodName, textGrams, textFat, textCarbs, textProteins, textCalories;
+
+    private TextView textFatPer100, textCarbsPer100, textProteinsPer100, textCaloriesPer100;
     private double fatPerGram, carbsPerGram, proteinPerGram, caloriesPerGram;
     private double originalQuantity;
     private double newQuantity;
-    private Button buttonSave, buttonCancel, buttonDelete;
+    private LinearLayout buttonSaveFoodLog, buttonDeleteFoodLog;
+
+    private static final int MAX_GRAMS = 1000;
+    private static final int WARNING_GRAMS = 500;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +47,23 @@ public class FoodLogEditActivity extends AppCompatActivity {
         setupUI();
 
         // Obtener referencias a los elementos de la interfaz
-        textFoodName = findViewById(R.id.textFoodName);
-        editFoodQuantity = findViewById(R.id.editFoodQuantity);
+        textFoodName = findViewById(R.id.foodSelectedHeaderText);
+        editTextGrams = findViewById(R.id.editTextGrams);
 
-        textFat = findViewById(R.id.textFat);
-        textCarbs = findViewById(R.id.textCarbs);
-        textProteins = findViewById(R.id.textProteins);
-        textCalories = findViewById(R.id.textCalories);
-        buttonSave = findViewById(R.id.buttonSave);
-        buttonCancel = findViewById(R.id.buttonCancel);
-        buttonDelete = findViewById(R.id.buttonDelete);
+        textGrams = findViewById(R.id.totalNutritionGramsTextView);
+        textFat = findViewById(R.id.totalFatTextView);
+        textCarbs = findViewById(R.id.totalCarbsTextView);
+        textProteins = findViewById(R.id.totalProteinTextView);
+        textCalories = findViewById(R.id.totalKcalTextView);
+
+        textFatPer100 = findViewById(R.id.totalFatPer100TextView);
+        textCarbsPer100 = findViewById(R.id.totalCarbsPer100TextView);
+        textProteinsPer100 = findViewById(R.id.totalProteinPer100TextView);
+        textCaloriesPer100 = findViewById(R.id.totalKcalPer100TextView);
+
+        buttonSaveFoodLog = findViewById(R.id.btnSaveFoodLog);
+        buttonDeleteFoodLog = findViewById(R.id.btnDeleteFoodLog);
+        TextView deleteFoodLogTextView = findViewById(R.id.btnDeleteFoodTextView);
 
         // Obtener los datos del Intent
         userId = getIntent().getIntExtra("userId", -1);
@@ -61,6 +78,11 @@ public class FoodLogEditActivity extends AppCompatActivity {
         double totalProteins = getIntent().getDoubleExtra("proteins", 0);
         double totalCalories = getIntent().getDoubleExtra("calories", 0);
 
+        textFatPer100.setText(formatNumber((totalFat / originalQuantity) * 100) + "g");
+        textCarbsPer100.setText(formatNumber((totalCarbs / originalQuantity) * 100) + "g");
+        textProteinsPer100.setText(formatNumber((totalProteins / originalQuantity) * 100) + "g");
+        textCaloriesPer100.setText(formatToInteger((totalCalories / originalQuantity) * 100));
+
         // Calcular valores por gramo
         fatPerGram = totalFat / originalQuantity;
         carbsPerGram = totalCarbs / originalQuantity;
@@ -68,14 +90,43 @@ public class FoodLogEditActivity extends AppCompatActivity {
         caloriesPerGram = totalCalories / originalQuantity;
 
         textFoodName.setText(foodName);
-        editFoodQuantity.setText(formatNumber(originalQuantity));
+        editTextGrams.setText(formatNumber(originalQuantity));
+        textGrams.setText(formatNumber(originalQuantity) + "g");
+
+        if (meal.equals("Desayuno")) {
+            deleteFoodLogTextView.setText("Eliminar alimento del " + meal);
+        } else {
+            deleteFoodLogTextView.setText("Eliminar alimento de la " + meal);
+        }
 
         // Actualizar valores nutricionales en la interfaz
         newQuantity = originalQuantity;
         updateNutritionalValues(newQuantity);
 
+        LinearLayout editGramsContainer = findViewById(R.id.editGramsContainer);
+
+        // Al hacer clic en el LinearLayout, se activa el EditText
+        editGramsContainer.setOnClickListener(v -> {
+            editTextGrams.requestFocus();
+
+            // Abrir el teclado
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(editTextGrams, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+        editGramsContainer.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                editGramsContainer.setBackgroundResource(R.drawable.rounded_edit_pressed_layout);
+            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                editGramsContainer.setBackgroundResource(R.drawable.rounded_edit_layout);
+            }
+            return false; // Dejar que otros eventos (como el clic) sigan funcionando
+        });
+
         // Agregar TextWatcher para actualizar valores en tiempo real
-        editFoodQuantity.addTextChangedListener(new TextWatcher() {
+        editTextGrams.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -83,9 +134,34 @@ public class FoodLogEditActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().isEmpty()) {
+                    String input = s.toString();
+
+                    // Eliminar ceros al inicio, pero permitir un solo "0" si es el único número
+                    if (input.matches("^0\\d+")) {
+                        input = input.replaceFirst("^0+", ""); // Elimina ceros iniciales
+                        editTextGrams.setText(input);
+                        editTextGrams.setSelection(input.length()); // Mantiene el cursor al final
+                        return;
+                    }
+
                     try {
+                        buttonSaveFoodLog.setVisibility(editTextGrams.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
+
                         double newQuantity = Double.parseDouble(s.toString());
                         updateNutritionalValues(newQuantity);
+
+                        if (editTextGrams.getText().toString().trim().length() > MAX_GRAMS) {
+                            editTextGrams.setText(String.valueOf(MAX_GRAMS));
+                            editTextGrams.setSelection(editTextGrams.getText().length());
+                            warningGramsTextView.setText("Máximo permitido: " + MAX_GRAMS + "g por temas de salud");
+                            warningGramsTextView.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                        } else if (grams >= WARNING_GRAMS) {
+                            warningGramsTextView.setText("Cuidado: " + WARNING_GRAMS + "g puede ser excesivo");
+                            warningGramsTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_light));
+                        } else {
+                            warningGramsTextView.setText("");
+                            warningGramsTextView.setTextColor(getResources().getColor(android.R.color.white));
+                        }
                     } catch (NumberFormatException e) {
                         updateNutritionalValues(originalQuantity);
                     }
@@ -99,18 +175,9 @@ public class FoodLogEditActivity extends AppCompatActivity {
             }
         });
 
-        buttonSave.setOnClickListener(v -> saveChanges());
+        buttonSaveFoodLog.setOnClickListener(v -> saveChanges());
 
-        buttonCancel.setOnClickListener(v -> {
-            Intent intent = new Intent(FoodLogEditActivity.this, FoodLogActivity.class);
-            intent.putExtra("userId", userId);
-            intent.putExtra("currentMeal", meal);
-            intent.putExtra("currentMealDate", date);
-            startActivity(intent);
-            finish();
-        });
-
-        buttonDelete.setOnClickListener(v -> {
+        buttonDeleteFoodLog.setOnClickListener(v -> {
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             dbHelper.deleteFoodLog(foodLogId);
 
@@ -124,18 +191,17 @@ public class FoodLogEditActivity extends AppCompatActivity {
 
     }
 
-
     @SuppressLint("SetTextI18n")
     private void updateNutritionalValues(double quantity) {
-        textFat.setText(formatNumber(quantity * fatPerGram) + "gr de Grasa");
-        textCarbs.setText(formatNumber(quantity * carbsPerGram) + "gr de Carbohidratos");
-        textProteins.setText(formatNumber(quantity * proteinPerGram) + "gr de Proteína");
-        textCalories.setText(formatNumber(quantity * caloriesPerGram) + " Calorías");
+        textGrams.setText(formatNumber(quantity) + "g");
+        textFat.setText(formatNumber(quantity * fatPerGram) + "g");
+        textCarbs.setText(formatNumber(quantity * carbsPerGram) + "g");
+        textProteins.setText(formatNumber(quantity * proteinPerGram) + "g");
+        textCalories.setText(formatToInteger(quantity * caloriesPerGram));
     }
 
-
     private void saveChanges() {
-        String newQuantityStr = editFoodQuantity.getText().toString();
+        String newQuantityStr = editTextGrams.getText().toString();
         if (!newQuantityStr.isEmpty() || newQuantityStr.equals("0")) {
             double newQuantity = Double.parseDouble(newQuantityStr);
             DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -155,11 +221,16 @@ public class FoodLogEditActivity extends AppCompatActivity {
 
     public static String formatNumber(double number) {
         if (number % 1 == 0) {
-            return String.format(Locale.getDefault(), "%.0f", number); // Si es un número entero, sin decimales
+            return String.format(Locale.US, "%.0f", number); // Entero sin decimales
         } else {
-            return String.format(Locale.getDefault(), "%.2f", number); // Si tiene decimales, muestra dos
+            return String.format(Locale.US, "%.2f", number); // Decimal con punto
         }
     }
+
+    public static String formatToInteger(double number) {
+        return String.format(Locale.US, "%.0f", number);
+    }
+
 
     private void setupUI() {
         getWindow().setStatusBarColor(Color.parseColor("#7AB8FF"));

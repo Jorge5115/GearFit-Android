@@ -41,7 +41,7 @@
         <activity android:name=".SelectFoodLogActivity" />
         <activity android:name=".FoodLogEditActivity" />
         <activity android:name=".BarcodeScannerActivity" />
-
+        <activity android:name=".FoodListEditActivity" />
 
     </application>
 

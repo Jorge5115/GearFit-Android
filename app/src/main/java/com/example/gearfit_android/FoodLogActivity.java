@@ -151,6 +151,8 @@ public class FoodLogActivity extends AppCompatActivity {
 
         float totalCalories = 0, totalProteins = 0, totalCarbs = 0, totalFats = 0;
 
+        boolean validFoodLogs = false;  // Variable para verificar si hay alimentos válidos
+
         foodLogContainer.removeAllViews();
         for (FoodLog log : foodLogs) {
             // Obtener los valores nutricionales
@@ -207,6 +209,8 @@ public class FoodLogActivity extends AppCompatActivity {
                 // Agregar la vista del alimento al contenedor
                 foodLogContainer.addView(foodView);
 
+                validFoodLogs = true;  // Marcar que hay al menos un alimento válido
+
                 // Total de cada valor acumulado
                 totalFoodLogFats.setText(formatNumber(totalFats));
                 totalFoodLogCarbs.setText(formatNumber(totalCarbs));
@@ -215,8 +219,8 @@ public class FoodLogActivity extends AppCompatActivity {
             }
         }
 
-        if (foodLogs.isEmpty()) {
-            foodLogInfo.setVisibility(View.GONE);  // Oculta la sección si no hay alimentos
+        if (!validFoodLogs) {
+            foodLogInfo.setVisibility(View.GONE);  // Oculta la sección si hay alimentos pero su id padre fue eliminado
         } else {
             foodLogInfo.setVisibility(View.VISIBLE);  // Muestra la sección si hay alimentos
         }
@@ -224,9 +228,9 @@ public class FoodLogActivity extends AppCompatActivity {
 
     public static String formatNumber(double number) {
         if (number % 1 == 0) {
-            return String.format(Locale.getDefault(), "%.0f", number); // Si es un número entero, sin decimales
+            return String.format(Locale.US, "%.0f", number); // Si es un número entero, sin decimales
         } else {
-            return String.format(Locale.getDefault(), "%.2f", number); // Si tiene decimales, muestra dos
+            return String.format(Locale.US, "%.2f", number); // Si tiene decimales, muestra dos
         }
     }
 

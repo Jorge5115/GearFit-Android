@@ -407,4 +407,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public boolean updateFood(Food food) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Verificar si ya existe otro alimento con el mismo nombre para el usuario
+        Cursor cursor = db.rawQuery(
+                "SELECT " + COLUMN_FOOD_ID + " FROM " + TABLE_FOOD +
+                        " WHERE " + COLUMN_FOOD_USER_ID + " = ? AND " +
+                        COLUMN_FOOD_NAME + " = ? AND " +
+                        COLUMN_FOOD_ID + " != ?",
+                new String[]{
+                        String.valueOf(food.getUserId()),
+                        food.getName(),
+                        String.valueOf(food.getId())
+                }
+        );
+
+        boolean nameExists = cursor.moveToFirst();
+        cursor.close();
+
+        if (nameExists) {
+            db.close();
+            return false;  // Ya existe otro alimento con el mismo nombre
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FOOD_NAME, food.getName());
+        values.put(COLUMN_FOOD_CALORIES, food.getCalories());
+        values.put(COLUMN_FOOD_PROTEIN, food.getProtein());
+        values.put(COLUMN_FOOD_CARBS, food.getCarbs());
+        values.put(COLUMN_FOOD_FAT, food.getFat());
+
+        int rowsAffected = db.update(
+                TABLE_FOOD,
+                values,
+                COLUMN_FOOD_ID + " = ? AND " + COLUMN_FOOD_USER_ID + " = ?",
+                new String[]{String.valueOf(food.getId()), String.valueOf(food.getUserId())}
+        );
+
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public boolean deleteFood(int foodId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int rowsDeleted = db.delete(TABLE_FOOD, COLUMN_FOOD_ID + " = ?", new String[]{String.valueOf(foodId)});
+
+        db.close();
+        return rowsDeleted > 0;
+    }
+
+
+
 }
