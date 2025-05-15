@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/settings_background"
+        android:elevation="10dp"
         android:paddingTop="30dp"
         android:paddingBottom="30dp">
 
@@ -35,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Profile"
+                android:text="Mi Perfil"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -74,6 +75,7 @@
             android:layout_below="@id/usernameTextView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:text="correo@example.com"
             android:textColor="@color/grey"
             android:textSize="16sp" />
@@ -91,91 +93,152 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="50dp">
 
             <!-- Campo para cambiar el nombre de usuario -->
-            <EditText
-                android:id="@+id/editUsername"
-                android:layout_width="250dp"
+            <LinearLayout
+                android:id="@+id/usernameLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/rectangular_settings_text"
-                android:hint="Nombre de Usuario"
-                android:padding="10dp"
-                android:textAlignment="center" />
+                android:orientation="vertical">
 
-            <!-- Campo para cambiar la altura -->
-            <EditText
-                android:id="@+id/editHeight"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editUsername"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/rectangular_settings_text"
-                android:hint="Altura (cm)"
-                android:inputType="numberDecimal"
-                android:padding="10dp"
-                android:textAlignment="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Nombre de Usuario *"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-            <!-- Campo para cambiar el peso -->
-            <EditText
-                android:id="@+id/editWeight"
-                android:layout_width="250dp"
+                <EditText
+                    android:id="@+id/editUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rectangular_settings_text"
+                    android:hint="Nombre de Usuario"
+                    android:padding="20dp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey" />
+            </LinearLayout>
+
+            <!-- Campo para cambiar la altura y el peso del usuario -->
+            <LinearLayout
+                android:id="@+id/heightWeightLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editHeight"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rectangular_settings_text"
-                android:hint="Peso (kg)"
-                android:inputType="numberDecimal"
-                android:padding="10dp"
-                android:textAlignment="center" />
+                android:layout_below="@id/usernameLayout"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Altura -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Altura (cm)"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/editHeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rectangular_settings_text"
+                        android:hint="Altura"
+                        android:inputType="number"
+                        android:padding="20dp"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/grey" />
+                </LinearLayout>
+
+                <!-- Peso -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Peso (kg)"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/editWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rectangular_settings_text"
+                        android:hint="Peso"
+                        android:inputType="numberDecimal"
+                        android:padding="20dp"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/grey" />
+                </LinearLayout>
+            </LinearLayout>
+
 
             <!-- Campo para cambiar el objetivo de calorías -->
-            <EditText
-                android:id="@+id/editKcalObjective"
-                android:layout_width="250dp"
+            <LinearLayout
+                android:id="@+id/kcalLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editWeight"
+                android:layout_below="@id/heightWeightLayout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rectangular_settings_text"
-                android:hint="Calorías diarias"
-                android:inputType="number"
-                android:padding="10dp"
-                android:textAlignment="center" />
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Objetivo diario de Calorías"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/editKcalObjective"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rectangular_settings_text"
+                    android:hint="Calorías diarias"
+                    android:inputType="number"
+                    android:padding="20dp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey" />
+            </LinearLayout>
 
             <!-- Botón para guardar cambios -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveButton"
-                android:layout_width="250dp"
-                android:layout_height="60dp"
-                android:layout_below="@id/editKcalObjective"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_below="@id/kcalLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:text="SAVE CHANGES"
+                android:text="GUARDAR CAMBIOS"
                 android:textColor="@color/blue"
                 app:backgroundTint="@color/white"
                 app:cornerRadius="25dp"
                 app:strokeColor="@color/blue"
                 app:strokeWidth="3dp" />
 
-            <!-- Botón para eliminar cuenta -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/deleteAccountButton"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/saveButton"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="DELETE ACCOUNT"
-                android:textColor="#BFF44336"
-                app:backgroundTint="@color/white"
-                app:cornerRadius="25dp"
-                app:strokeColor="#BFF44336"
-                app:strokeWidth="3dp" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

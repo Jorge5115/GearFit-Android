@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
@@ -102,6 +103,7 @@ public class AddFoodLogActivity extends AppCompatActivity {
         editGramsLayout.setVisibility(View.GONE);
 
         editTextGrams = findViewById(R.id.editTextGrams);
+        editTextGrams.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
 
         totalNutritionGramsTextView = findViewById(R.id.totalNutritionGramsTextView);
         warningGramsTextView = findViewById(R.id.warningGramsTextView);
@@ -145,6 +147,9 @@ public class AddFoodLogActivity extends AppCompatActivity {
         editGramsContainer.setOnClickListener(v -> {
             editTextGrams.requestFocus();
 
+            // Mover el cursor al final del texto
+            editTextGrams.setSelection(editTextGrams.getText().length());
+
             // Abrir el teclado
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null) {
@@ -163,12 +168,19 @@ public class AddFoodLogActivity extends AppCompatActivity {
 
         // Detectar cambios en los gramos y calcular en tiempo real
         editTextGrams.addTextChangedListener(new TextWatcher() {
+            private boolean isModifyingText = false;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Si isModifyingText es true, significa que el cambio de texto se está realizando internamente y no por el usuario. En ese caso, salimos del método para evitar el bucle.
+                if (isModifyingText) return;
+
+                // Indicamos que estamos a punto de modificar el texto internamente.
+                isModifyingText = true;
                 if (!s.toString().isEmpty()) {
                     String input = s.toString();
 
@@ -177,6 +189,7 @@ public class AddFoodLogActivity extends AppCompatActivity {
                         input = input.replaceFirst("^0+", ""); // Elimina ceros iniciales
                         editTextGrams.setText(input);
                         editTextGrams.setSelection(input.length()); // Mantiene el cursor al final
+                        isModifyingText = false;
                         return;
                     }
 
@@ -189,7 +202,7 @@ public class AddFoodLogActivity extends AppCompatActivity {
                         // Actualizar el texto del botón con los gramos seleccionados
                         btnSaveFoodTextView.setText("Añadir " + grams + "g a " + mealTitleTextView.getText().toString());
 
-                        if (grams >= MAX_GRAMS) {
+                        if (grams > 999) {
                             editTextGrams.setText(String.valueOf(MAX_GRAMS));
                             editTextGrams.setSelection(editTextGrams.getText().length());
                             warningGramsTextView.setText("Máximo permitido: " + MAX_GRAMS + "g por temas de salud");
@@ -210,6 +223,7 @@ public class AddFoodLogActivity extends AppCompatActivity {
                     editTextGrams.setSelection(editTextGrams.getText().length());
                 }
                 calculateNutrition();
+                isModifyingText = false;
             }
 
             @Override

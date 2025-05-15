@@ -541,16 +541,18 @@
     <!-- Botón para añadir un nuevo alimento -->
     <LinearLayout
         android:id="@+id/btnSaveFoodLog"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="55dp"
         android:layout_below="@id/totalNutritionTable"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:background="@drawable/rounded_add_button"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:elevation="10dp"
+        android:gravity="center_vertical"
         android:paddingLeft="18dp"
+        android:paddingEnd="20dp"
         android:paddingRight="18dp"
+        android:translationX="60dp"
         android:visibility="gone">
 
         <ImageView
@@ -563,9 +565,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            android:text="Añadir comida"
+            android:text="Añadir cantidad a la merienda"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

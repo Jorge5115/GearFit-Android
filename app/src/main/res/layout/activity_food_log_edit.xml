@@ -534,17 +534,18 @@
     <!-- Botón para añadir un nuevo alimento -->
     <LinearLayout
         android:id="@+id/btnSaveFoodLog"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="55dp"
         android:layout_below="@id/totalNutritionTable"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:background="@drawable/rounded_add_button"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:elevation="10dp"
+        android:gravity="center_vertical"
         android:paddingLeft="18dp"
+        android:paddingEnd="20dp"
         android:paddingRight="18dp"
-        android:visibility="gone">
+        android:translationX="100dp">
 
         <ImageView
             android:layout_width="30dp"
@@ -556,37 +557,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            android:text="Guardar comida"
+            android:text="Guardar cantidad"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/btnDeleteFoodLog"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="55dp"
         android:layout_below="@id/btnSaveFoodLog"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/rounded_delete_button"
+        android:elevation="10dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingEnd="40dp"
         android:paddingLeft="18dp"
-        android:paddingRight="18dp">
+        android:paddingRight="18dp"
+        android:translationX="140dp">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/icon_delete"/>
+            android:src="@drawable/icon_delete" />
 
         <TextView
             android:id="@+id/btnDeleteFoodTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            android:text="Eliminar alimento de la Comida"
+            android:text="Eliminar"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

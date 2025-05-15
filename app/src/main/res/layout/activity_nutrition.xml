@@ -343,42 +343,74 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <!-- Meal buttons layout -->
     <LinearLayout
+        android:id="@+id/layoutRegisterDailyCalories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvCaloriesRemaining"
-        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/btnRegisterDailyCalories"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:background="@color/grey"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fija tu objetivo de calorías diarias"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginStart="30dp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_register_calories" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Meal buttons layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layoutRegisterDailyCalories"
         android:gravity="center"
         android:orientation="vertical">
 
         <!-- Button for Desayuno -->
         <LinearLayout
             android:id="@+id/btnDesayuno"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_food_button"
+            android:background="@drawable/rounded_breakfast_button"
+            android:elevation="5dp"
             android:gravity="center_vertical"
-            android:padding="8dp">
+            android:padding="15dp">
 
             <ImageView
-                android:id="@+id/iconDesayuno"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_toast" />
+                android:src="@drawable/icon_pancakes" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textTitleDesayuno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Desayuno"
@@ -386,50 +418,51 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textSubtitleDesayuno"
+                    android:id="@+id/textSubtitleBreakfast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descripción"
+                    android:text="2 Alimentos registrados"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iconRightDesayuno"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/icon_plus"
-            />
+            <TextView
+                android:id="@+id/textCaloriesBreakfast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="350"
+                android:textColor="#BEBE20"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Button for Comida -->
         <LinearLayout
             android:id="@+id/btnComida"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_food_button"
+            android:background="@drawable/rounded_lunch_button"
+            android:elevation="5dp"
             android:gravity="center_vertical"
-            android:padding="8dp">
+            android:padding="15dp">
 
             <ImageView
-                android:id="@+id/iconLeft"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/icon_rice" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comida"
@@ -437,45 +470,49 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textSubtitle"
+                    android:id="@+id/textSubtitleLunch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descripción"
+                    android:text="4 Alimentos registrados"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iconRight"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/icon_plus" />
+            <TextView
+                android:id="@+id/textCaloriesLunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="1720"
+                android:textColor="#B91C1C"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Button for Merienda -->
         <LinearLayout
             android:id="@+id/btnMerienda"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_food_button"
+            android:background="@drawable/rounded_snack_button"
+            android:elevation="5dp"
             android:gravity="center_vertical"
-            android:padding="8dp">
+            android:padding="15dp">
 
             <ImageView
                 android:id="@+id/iconMerienda"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_tea" />
+                android:src="@drawable/icon_apple" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -490,7 +527,7 @@
                     android:id="@+id/textSubtitleMerienda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descripción"
+                    android:text="0 Alimentos registrados"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -506,26 +543,27 @@
         <!-- Button for Cena -->
         <LinearLayout
             android:id="@+id/btnCena"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_food_button"
+            android:background="@drawable/rounded_dinner_button"
+            android:elevation="5dp"
             android:gravity="center_vertical"
-            android:padding="8dp">
+            android:padding="15dp">
 
             <ImageView
                 android:id="@+id/iconCena"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_soup" />
+                android:src="@drawable/icon_steak" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -540,7 +578,7 @@
                     android:id="@+id/textSubtitleCena"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descripción"
+                    android:text="0 Alimentos registrados"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>

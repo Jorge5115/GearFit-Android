@@ -459,5 +459,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean isUsernameTaken(String username, int excludeUserId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM " + TABLE_USERS + " WHERE " + COLUMN_NAME + " = ? AND " + COLUMN_ID + " != ?",
+                new String[]{username, String.valueOf(excludeUserId)}
+        );
+
+        boolean exists = false;
+        if (cursor.moveToFirst()) {
+            exists = cursor.getInt(0) > 0;
+        }
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    public boolean updateUserData(int userId, String username, float height, float weight, int kcalObjective) {
+        if (isUsernameTaken(username, userId)) {
+            return false; // Nombre ya tomado
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, username);
+        values.put(COLUMN_HEIGHT, height);
+        values.put(COLUMN_WEIGHT, weight);
+        values.put(COLUMN_KCAL_OBJECTIVE, kcalObjective);
+
+        int rowsAffected = db.update(TABLE_USERS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(userId)});
+        db.close();
+
+        return rowsAffected > 0;
+    }
+
+
 
 }
