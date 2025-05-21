@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -105,17 +107,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        // Configurar clic en nutritionImage
-        nutritionImage = findViewById(R.id.nutritionImage);
-        nutritionImage.setClickable(true);
-        nutritionImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NutritionActivity.class);
-                intent.putExtra("userId", userId);
-                startActivity(intent);
+        // Configurar clic en nutritionButton
+        CardView nutritionButton = findViewById(R.id.nutritionButton);
+        View nutritionBorderOverlay = findViewById(R.id.nutritionBorderOverlay);
+
+        nutritionButton.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    nutritionBorderOverlay.setVisibility(View.VISIBLE);
+                    return true;
+
+                case MotionEvent.ACTION_UP:
+                    nutritionBorderOverlay.setVisibility(View.GONE);
+
+                    // Lanzar la actividad
+                    Intent intent = new Intent(MainActivity.this, NutritionActivity.class);
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                    return true;
+
+                case MotionEvent.ACTION_CANCEL:
+                    nutritionBorderOverlay.setVisibility(View.GONE);
+                    return true;
             }
+            return false;
         });
+
+
 
         // Cargar el valor inicial de pasos desde SharedPreferences
         initialStepCount = getInitialStepCount(userId);

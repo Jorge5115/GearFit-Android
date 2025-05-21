@@ -25,10 +25,13 @@
             <!-- Botón de volver atrás -->
             <ImageView
                 android:id="@+id/backButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
                 android:contentDescription="Volver atrás"
-                android:src="@drawable/icon_back_arrow" />
+                android:src="@drawable/icon_back_arrow"
+                app:tint="@color/black" />
 
             <!-- Título "Ajustes" -->
             <TextView
@@ -50,9 +53,9 @@
             android:layout_below="@id/headerLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/rounded_icon"
+            android:background="@drawable/rounded_icon_settings"
             android:contentDescription="Icono de usuario"
-            android:src="@drawable/icon_person" />
+            android:src="@drawable/icon_person_settings" />
 
         <!-- Nombre de usuario -->
         <TextView
@@ -231,7 +234,7 @@
                 android:layout_height="65dp"
                 android:layout_below="@id/kcalLayout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:text="GUARDAR CAMBIOS"
                 android:textColor="@color/blue"
                 app:backgroundTint="@color/white"

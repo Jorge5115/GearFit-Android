@@ -120,7 +120,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:src="@drawable/icon_carbs_letter" />
+                android:src="@drawable/icon_carbs_letter"
+                app:tint="#CDB21D" />
 
             <EditText
                 android:id="@+id/etCarbs"
@@ -164,19 +165,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnDeleteFood"
                 android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/red"
                 android:elevation="10dp"
                 android:text="ELIMINAR"
-                android:textColor="@color/white"
-                android:layout_marginEnd="10dp"/>
+                android:textColor="@color/white" />
 
             <!-- Button to save food -->
             <Button

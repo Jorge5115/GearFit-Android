@@ -493,6 +493,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+    public int getKcalObjectiveByUserId(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int kcalObjective = -1;
+
+        Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_KCAL_OBJECTIVE}, COLUMN_ID + "=?",
+                new String[]{String.valueOf(userId)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            kcalObjective = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_KCAL_OBJECTIVE));
+            cursor.close();
+        }
+
+        db.close();
+        return kcalObjective;
+    }
+
 
 
 }

@@ -83,7 +83,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="2dp"
-            android:src="@drawable/icon_carbs_letter" />
+            android:src="@drawable/icon_carbs_letter"
+            app:tint="#CDB21D" />
 
         <TextView
             android:id="@+id/food_carbs"

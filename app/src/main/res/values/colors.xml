@@ -13,9 +13,11 @@
     <color name="yellow">#D9BC00</color>"
     <color name="orange">#d9630a</color>
     <color name="red">#F44336</color>
+    <color name="dark_red">#C2342A</color>
     <color name="light_blue">#DAECFF</color>
     <color name="blue">#4192f5</color>
     <color name="light_grey">#f7f7f7</color>
     <color name="grey">#7C7C7C</color>
+    <color name="medium_grey">#5A5A5A</color>
     <color name="dark_grey">#1f191b</color>
 </resources>

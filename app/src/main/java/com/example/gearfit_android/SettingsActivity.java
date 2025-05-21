@@ -1,6 +1,7 @@
 package com.example.gearfit_android;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -84,7 +85,13 @@ public class SettingsActivity extends AppCompatActivity {
         boolean updated = dbHelper.updateUserData(userId, username, height, weight, kcalObjective);
         if (updated) {
             Toast.makeText(this, "Datos actualizados correctamente.", Toast.LENGTH_SHORT).show();
-            loadUserData(); // Recarga los datos actualizados
+            loadUserData();
+
+            // Navegar a la actividad principal
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+            finish();
         } else {
             Toast.makeText(this, "El nombre de usuario ya está en uso.", Toast.LENGTH_SHORT).show();
         }

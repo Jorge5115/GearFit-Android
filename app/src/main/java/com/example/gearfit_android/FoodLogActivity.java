@@ -215,7 +215,7 @@ public class FoodLogActivity extends AppCompatActivity {
                 totalFoodLogFats.setText(formatNumber(totalFats));
                 totalFoodLogCarbs.setText(formatNumber(totalCarbs));
                 totalFoodLogProteins.setText(formatNumber(totalProteins));
-                totalFoodLogCalories.setText(formatNumber(totalCalories));
+                totalFoodLogCalories.setText(formatToInteger(totalCalories));
             }
         }
 
@@ -232,6 +232,10 @@ public class FoodLogActivity extends AppCompatActivity {
         } else {
             return String.format(Locale.US, "%.2f", number); // Si tiene decimales, muestra dos
         }
+    }
+
+    public static String formatToInteger(double number) {
+        return String.format(Locale.US, "%.0f", number);
     }
 
     private void setupUI() {
