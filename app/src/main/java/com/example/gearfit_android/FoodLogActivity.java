@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class FoodLogActivity extends AppCompatActivity {
     private TextView mealTitleTextView;
     private TextView selectedDateTextView;
 
+    private String unformattedDate;
+
     private LinearLayout foodLogInfo;
     private LinearLayout foodLogContainer;
 
@@ -62,9 +65,19 @@ public class FoodLogActivity extends AppCompatActivity {
         String mealTitle = getIntent().getStringExtra("currentMeal");
         String selectedDate = getIntent().getStringExtra("currentMealDate");
 
+        unformattedDate = selectedDate;
+
         mealTitleTextView = findViewById(R.id.currentMeal);
         selectedDateTextView = findViewById(R.id.currentMealDate);
         foodLogContainer = findViewById(R.id.foodLogContainer);
+
+        ImageView buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(FoodLogActivity.this, NutritionActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+            finish();
+        });
 
         // Mostrar la comida actual y la fecha
         mealTitleTextView.setText(mealTitle);
@@ -107,6 +120,7 @@ public class FoodLogActivity extends AppCompatActivity {
                 intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
                 intent.putExtra("currentMealDate", selectedDate);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -146,7 +160,7 @@ public class FoodLogActivity extends AppCompatActivity {
 
         // Verificamos si no hay ningún log de alimento
         if (foodLogs.isEmpty()) {
-            Toast.makeText(this, "No se han encontrado alimentos para esta comida.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Empieza agregando tu primer alimento", Toast.LENGTH_SHORT).show();
         }
 
         float totalCalories = 0, totalProteins = 0, totalCarbs = 0, totalFats = 0;
@@ -203,6 +217,28 @@ public class FoodLogActivity extends AppCompatActivity {
 
                         startActivity(intent);
                         finish();
+                    }
+                });
+
+                // Botón para editar alimento (Visual)
+                foodView.setOnTouchListener(new View.OnTouchListener() {
+
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        int paddingLeft = v.getPaddingLeft();
+                        int paddingTop = v.getPaddingTop();
+                        int paddingRight = v.getPaddingRight();
+                        int paddingBottom = v.getPaddingBottom();
+
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            v.setBackgroundResource(R.drawable.food_item_pressed_background);
+                        } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                            v.setBackgroundResource(R.drawable.food_item_background);
+                        }
+
+                        // Restaurar el padding después de cambiar el fondo
+                        v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                        return false; // Permite que el evento continúe propagándose (para que siga funcionando el OnClick)
                     }
                 });
 

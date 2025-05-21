@@ -510,5 +510,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public String getUsernameById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " + COLUMN_NAME + " FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + " = ?",
+                new String[]{String.valueOf(userId)}
+        );
+
+        String username = null;
+        if (cursor.moveToFirst()) {
+            username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+        }
+
+        cursor.close();
+        db.close();
+        return username;
+    }
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +42,16 @@ public class SettingsActivity extends AppCompatActivity {
         editWeight = findViewById(R.id.editWeight);
         editKcalObjective = findViewById(R.id.editKcalObjective);
 
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+            finish();
+        });
+
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> saveUserData());
-
 
         // Inicializar DatabaseHelper
         dbHelper = new DatabaseHelper(this);

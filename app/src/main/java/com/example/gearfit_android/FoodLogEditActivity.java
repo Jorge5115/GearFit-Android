@@ -65,8 +65,18 @@ public class FoodLogEditActivity extends AppCompatActivity {
         textProteinsPer100 = findViewById(R.id.totalProteinPer100TextView);
         textCaloriesPer100 = findViewById(R.id.totalKcalPer100TextView);
 
+        ImageView buttonBack = findViewById(R.id.buttonBack);
         buttonSaveFoodLog = findViewById(R.id.btnSaveFoodLog);
         buttonDeleteFoodLog = findViewById(R.id.btnDeleteFoodLog);
+
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(FoodLogEditActivity.this, FoodLogActivity.class);
+            intent.putExtra("userId", userId);
+            intent.putExtra("currentMeal", meal);
+            intent.putExtra("currentMealDate", date);
+            startActivity(intent);
+            finish();
+        });
 
         // Obtener los datos del Intent
         userId = getIntent().getIntExtra("userId", -1);

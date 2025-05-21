@@ -348,7 +348,6 @@ public class AddFoodLogActivity extends AppCompatActivity {
         int grams = Integer.parseInt(editTextGrams.getText().toString());
 
         FoodLog newLog = new FoodLog(selectedFood.getId(), userId, grams, selectDateUnformatted, mealTitleTextView.getText().toString());
-        Toast.makeText(this, "Guardando alimento del usuario " + userId + " " + newLog.getUserId(), Toast.LENGTH_SHORT).show();
 
         dbHelper.insertFoodLog(newLog);
 

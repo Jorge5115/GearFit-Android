@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,6 +45,9 @@ public class NutritionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nutrition);
         setupUI();
 
+        // Puedes recibir el userId si es necesario
+        userId = getIntent().getIntExtra("userId", -1);
+
         selectedDate = Calendar.getInstance();
 
         // Inicializa las vistas
@@ -54,6 +58,14 @@ public class NutritionActivity extends AppCompatActivity {
         progressCaloriesBar = findViewById(R.id.progressCaloriesBar);
 
         showNutritionLogForDate(selectedDate);
+
+        ImageView buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(NutritionActivity.this, MainActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+            finish();
+        });
 
         btnRegisterDailyCalories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +96,6 @@ public class NutritionActivity extends AppCompatActivity {
         btnCena = findViewById(R.id.btnDinner);
 
         setupMealButtons();
-
-        userId = getIntent().getIntExtra("userId", -1);
 
         dayButtons = new MaterialCardView[]{
                 findViewById(R.id.cardMonday), findViewById(R.id.cardTuesday),
@@ -310,6 +320,7 @@ public class NutritionActivity extends AppCompatActivity {
         intent.putExtra("currentMeal", meal);
         intent.putExtra("currentMealDate", formattedDate);
         startActivity(intent);
+        finish();
     }
 
     private void populateDaysWithDates() {

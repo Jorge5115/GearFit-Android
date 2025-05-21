@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class FoodListActivity extends AppCompatActivity {
     private int userId;
     private TextView mealTitleTextView;
     private TextView selectedDateTextView;
+
+    private String unformattedDate;
 
     // Elementos de la interfaz de usuario
     private LinearLayout foodItemContainer;
@@ -63,9 +66,19 @@ public class FoodListActivity extends AppCompatActivity {
         String mealTitle = getIntent().getStringExtra("currentMeal");
         String selectedDate = getIntent().getStringExtra("currentMealDate");
 
+        unformattedDate = selectedDate;
+
         // Mostrar la comida actual y la fecha
         mealTitleTextView.setText(mealTitle);
         String formattedDate = formatDate(selectedDate);
+
+        ImageView buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(FoodListActivity.this, NutritionActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+            finish();
+        });
 
         // Formatear la fecha antes de mostrarla
         selectedDateTextView.setText(formattedDate);
@@ -95,8 +108,9 @@ public class FoodListActivity extends AppCompatActivity {
                 Intent intent = new Intent(FoodListActivity.this, FoodCreateActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("currentMeal", mealTitle);
-                intent.putExtra("currentMealDate", selectedDate);
+                intent.putExtra("currentMealDate", unformattedDate);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -191,7 +205,7 @@ public class FoodListActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId); // si querés seguir pasando también el userId
                     intent.putExtra("foodId", food.getId()); // pasás el ID del alimento
                     intent.putExtra("currentMeal", mealTitleTextView.getText().toString());
-                    intent.putExtra("currentMealDate", selectedDateTextView.getText().toString());
+                    intent.putExtra("currentMealDate", unformattedDate);
                     startActivity(intent);
                     finish();
                 }

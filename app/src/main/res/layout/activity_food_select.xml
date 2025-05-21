@@ -3,20 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/medium_grey"
+    android:paddingTop="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecciona un alimento"
+        android:text="Selecciona un alimento de tu lista"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_gravity="center_horizontal"
-        android:paddingBottom="10dp"/>
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <LinearLayout

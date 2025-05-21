@@ -20,6 +20,7 @@ import android.widget.Toast;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = new DatabaseHelper(this);
         setContentView(R.layout.activity_main);
         setupUI();
 
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Obtener los datos del intent
         userId = getIntent().getIntExtra("userId", -1);
-        String username = getIntent().getStringExtra("username");
+        String username = dbHelper.getUsernameById(userId);
 
         // Inicializar componentes
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         stepsTextView = findViewById(R.id.stepsTextView);
-        dbHelper = new DatabaseHelper(this);
 
         // Obtener la fecha actual
         currentDate = getCurrentDate();
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 intent.putExtra("userId", userId);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     // Lanzar la actividad
                     Intent intent = new Intent(MainActivity.this, NutritionActivity.class);
                     intent.putExtra("userId", userId);
+                    intent.putExtra("username", username);
                     startActivity(intent);
                     return true;
 
@@ -132,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             return false;
         });
-
 
 
         // Cargar el valor inicial de pasos desde SharedPreferences
@@ -155,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     // Obtener la fecha actual formateada
     private String getCurrentFormattedDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM, dd 'of' yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
         return sdf.format(new Date());
     }
 

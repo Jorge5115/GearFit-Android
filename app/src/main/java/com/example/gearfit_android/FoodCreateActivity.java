@@ -77,7 +77,12 @@ public class FoodCreateActivity extends AppCompatActivity {
         btnCancelFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(FoodCreateActivity.this, FoodListActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("currentMeal", mealTitle);
+                intent.putExtra("currentMealDate", selectDateUnformatted);
+                startActivity(intent);
+                finish();;
             }
         });
 

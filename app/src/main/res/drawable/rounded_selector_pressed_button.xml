@@ -1,0 +1,9 @@
+<!-- res/drawable/rounded_button.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/light_grey" /> <!-- Color de fondo blanco, cambia si quieres -->
+    <corners android:radius="24dp" /> <!-- Radio de esquina más redondeado -->
+    <stroke
+        android:width="3dp"
+        android:color="@color/light_grey" />
+</shape>

@@ -162,16 +162,19 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="320dp"
+            android:layout_height="70dp"
             android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnDeleteFood"
-                android:layout_width="140dp"
+                android:layout_width="145dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/red"
                 android:elevation="10dp"
@@ -181,9 +184,8 @@
             <!-- Button to save food -->
             <Button
                 android:id="@+id/btnSaveFood"
-                android:layout_width="150dp"
+                android:layout_width="145dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/blue"
                 android:elevation="10dp"
                 android:text="GUARDAR"
@@ -194,7 +196,7 @@
             android:id="@+id/btnCancelFood"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="-13dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/grey"
             android:elevation="10dp"
