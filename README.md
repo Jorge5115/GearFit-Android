@@ -1,4 +1,4 @@
-# 🥗 GearFit – Aplicación de Seguimiento Nutricional y Actividad Física
+# Aplicación de Seguimiento Nutricional y Actividad Física
 
 **GearFit** es una aplicación móvil desarrollada en Android Studio que permite a los usuarios registrar y analizar su alimentación diaria y su actividad física. Utiliza sensores nativos y tecnologías modernas para proporcionar una experiencia precisa y personalizada sin depender de servicios externos.
 
