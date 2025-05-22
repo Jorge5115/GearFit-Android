@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             caloriesTextView.setText(String.format("%.0f KC", caloriesBurned));
 
             TextView distanceTextView = findViewById(R.id.distanceTextView);
-            distanceTextView.setText(String.format("%.2f km", distanceInKm));
+            distanceTextView.setText(String.format(Locale.US, "%.2f km", distanceInKm));
         }
     }
 

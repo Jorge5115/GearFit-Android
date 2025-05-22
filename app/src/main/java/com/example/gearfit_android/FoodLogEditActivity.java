@@ -20,6 +20,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class FoodLogEditActivity extends AppCompatActivity {
@@ -50,9 +53,20 @@ public class FoodLogEditActivity extends AppCompatActivity {
         setupUI();
 
         // Obtener referencias a los elementos de la interfaz
+        String mealTitle = getIntent().getStringExtra("currentMeal");
+        String selectedDate = getIntent().getStringExtra("currentMealDate");
         textFoodName = findViewById(R.id.foodSelectedHeaderText);
         editTextGrams = findViewById(R.id.editTextGrams);
         editTextGrams.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+
+        TextView currentMeal = findViewById(R.id.currentMeal);
+        TextView currentMealDate = findViewById(R.id.currentMealDate);
+
+        currentMeal.setText(mealTitle);
+        String formattedDate = formatDate(selectedDate);
+
+        // Formatear la fecha antes de mostrarla
+        currentMealDate.setText(formattedDate);
 
         textGrams = findViewById(R.id.totalNutritionGramsTextView);
         textFat = findViewById(R.id.totalFatTextView);
@@ -242,6 +256,19 @@ public class FoodLogEditActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String formatDate(String dateString) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+
+        try {
+            Date date = inputFormat.parse(dateString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return dateString; // En caso de error, devuelve la fecha sin cambios
+        }
     }
 
     @SuppressLint("SetTextI18n")
